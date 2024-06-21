@@ -1,0 +1,16 @@
+Backtracking
+
+Blueprint
+
+Function helper() {
+    	# Base Condition
+	if solved -> save the solution|print
+		  -> return
+	for choice in choices {
+		if isValid(choice) {
+			choose
+			helper()
+			revert choice
+			}
+	} helper()
+	 }
