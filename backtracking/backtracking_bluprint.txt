@@ -3,9 +3,9 @@ Backtracking
 Blueprint
 
 Function helper() {
-    	# Base Condition
+    # Base Condition
 	if solved -> save the solution|print
-		  -> return
+			  -> return
 	for choice in choices {
 		if isValid(choice) {
 			choose
