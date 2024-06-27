@@ -14,3 +14,5 @@ Function helper() {
 			}
 	} helper()
 	 }
+
+Time complexity = number of nodes * work done at each node
