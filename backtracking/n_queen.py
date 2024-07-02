@@ -1,3 +1,6 @@
+# Time complexity: O(n!)
+# Space complexity: O(n^2)
+
 def solveNQueens(n):
     res = []
     board = [['.'] * n for _ in range(n)]
