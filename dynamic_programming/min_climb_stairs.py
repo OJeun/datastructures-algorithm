@@ -36,13 +36,21 @@ def min_cost_climbing_stairs_memoization(cost):
 # Space complexity = O(n)
 def min_cost_climbing_stairs_tabulation(cost):
     num_of_stairs = len(cost)
-    if num_of_stairs == 1:
-        return cost[0]
+    tabulation_array = [-1] * (num_of_stairs + 1)
+
+    tabulation_array[0] = 0
+    tabulation_array[1] = 0
+    for i in range(2, num_of_stairs + 1):
+        one_step = min_cost_climbing_stairs_tabulation[i-1] + cost[i-1]
+        two_steps = min_cost_climbing_stairs_tabulation[i-2] + cost[i-2]
+        
+        tabulation_array[i] = min(one_step, two_steps)
+
+    return tabulation_array[num_of_stairs]
+
     
-    if num_of_stairs == 2:
-        return min(cost[0], cost[1])
     
-    
+
 
 
 
