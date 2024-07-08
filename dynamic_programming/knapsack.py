@@ -43,7 +43,28 @@ def knap_sack_2(W, wt, val, n):
         return max(exclude, include)
 
     return helper(0, W)
-    
-print(knap_sack_2(8, [8, 2, 5], [2,3,9], 3))
-    
+
+# Time Complexity = O(n * W)
+# Space Complexity = O(n * W)
+def knap_sack_memoization(W, wt, val, n):
+    memoization_table = [[-1] * (W + 1) for _ in range(n)]
+    def helper(index, remain_weight):
+        # Base Case
+        if memoization_table[index][remain_weight] != -1:
+            return memoization_table[index][remain_weight]
+
+        if index > n - 1 or remain_weight == 0:
+            return 0
+        
+        # Recusrive Case
+        exclude = helper(index + 1, remain_weight)
+        include = 0
+        if wt[index] <= remain_weight:
+            include = val[index] + helper(index + 1, remain_weight-wt[index])
+        memoization_table[index][remain_weight] = max(exclude, include)
+        return memoization_table[index][remain_weight]
+
+    return helper(0, W)
+
+def knap_sack_tabulation()
     
