@@ -28,8 +28,10 @@ def knap_sack_1(W, wt, val, n):
 
 # Time complexity = O(2^n)
 # Space complexity = O(n)
-def knap_sack_2(W, wt, val, n):
 
+def knap_sack_2(W, wt, val, n):
+    # val = [2, 3, 9]
+    # wt = [8, 2, 5]
     def helper(index, remain_weight):
         # Base Case
         if index > n - 1 or remain_weight == 0:
@@ -43,6 +45,7 @@ def knap_sack_2(W, wt, val, n):
         return max(exclude, include)
 
     return helper(0, W)
+
 
 # Time Complexity = O(n * W)
 # Space Complexity = O(n * W)
@@ -66,5 +69,17 @@ def knap_sack_memoization(W, wt, val, n):
 
     return helper(0, W)
 
-def knap_sack_tabulation()
-    
+# Space Complexity = O(n * W)
+# Time Complexity = O(n * W)
+def knap_sack_tabulation(W, wt, val, n):
+    memoization_table = [[0] * (W + 1) for _ in range(n + 1)]
+
+    for i in range(1, n + 1):
+        for j in range(1, W + 1):
+            exclude = memoization_table[i-1][j]
+            include = 0
+            if wt[j-1] <= j:
+                include = val[i -1] + memoization_table[i-1][j - wt[i-1]]
+            memoization_table[i][j] = max(include, exclude)
+
+    return memoization_table[n][W]
