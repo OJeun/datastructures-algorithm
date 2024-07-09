@@ -79,7 +79,7 @@ def knap_sack_tabulation(W, wt, val, n):
             exclude = memoization_table[i-1][j]
             include = 0
             if wt[j-1] <= j:
-                include = val[i -1] + memoization_table[i-1][j - wt[i-1]]
+                include = val[i - 1] + memoization_table[i-1][j - wt[i-1]]
             memoization_table[i][j] = max(include, exclude)
 
     return memoization_table[n][W]
