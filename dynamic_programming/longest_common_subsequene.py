@@ -74,7 +74,7 @@ def longest_common_subsequence_tabulation(text1, text2):
     return dp[length_t2][length_t1]
 
 # Time Complexity = O(n * m)
-# Space Commplexity = O(m)
+# Space Commplexity = O(min(m, n))
 def longest_common_subsequence_optimized_tabulation(text1, text2):
     length_t1 = len(text1) # pbcdq
     length_t2 = len(text2) # pcq
