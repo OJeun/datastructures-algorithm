@@ -106,4 +106,4 @@ def edit_distance_optimized_tabulation(text1, text2):
                 insert = 1 + curr[col-1]
                 curr[col] = min(replace, delete, insert)
         prev = curr[:]
-    return curr[len_1]
+    return prev[len_1]
