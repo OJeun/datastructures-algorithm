@@ -1,3 +1,4 @@
+import math
 # Time complexity = O(2^n)
 # Space compleixty = O(n)
 
@@ -107,5 +108,44 @@ def length_of_LIS_1D_tabulation(nums):
             
     return max
     
-    
+# Time Complexity = O(n * logn)
+# Space Complexity = O(n)
 print(length_of_LIS_1D_tabulation([2,8,3,7]))
+
+def length_of_LIS_binary_search(nums):
+    length_num = len(nums)
+    result = [0]
+
+    for i in range(length_num):
+        if nums[i] > result[-1]:
+            result.append(nums[i])
+
+        else:
+            insert_index = binary_search(0, len(result)-1, nums[i])
+            result[insert_index] = nums[i]
+
+    # replace the smallest element that is larger than num[i] to nums[i]
+    def binary_search(start, end, target):
+        while start < end:
+            middle = (start + end) / 2
+            middle_index = math.floor(middle)
+
+            if result[middle_index] == target:
+                return middle_index
+            
+            elif end == start:
+                return end
+            
+            elif target > result[middle_index]:
+                start = middle_index
+
+            else:
+                end = middle_index-1
+        
+        return start
+    
+    return len(result)
+
+ 
+        
+
