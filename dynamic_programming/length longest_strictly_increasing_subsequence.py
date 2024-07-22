@@ -124,7 +124,7 @@ def length_of_LIS_binary_search(nums):
             insert_index = binary_search(0, len(result)-1, nums[i])
             result[insert_index] = nums[i]
 
-    # replace the smallest element that is larger than num[i] to nums[i]
+    # replace the smallest element larger than num[i] to nums[i]
     def binary_search(start, end, target):
         while start < end:
             middle = (start + end) / 2
