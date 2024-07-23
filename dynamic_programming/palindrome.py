@@ -1,26 +1,25 @@
 # Time complexity = O(n^2)
 # Space Complexity = O(n^2)
-def countSubstrings(s):
-    n = len(s) # n = 6
-    dp = [[-1] * n for _ in range(n)]
-    count = 0
-    
-    for i in range(n):
-        dp[i][i] = True # lenght = 1 -> true 
-        count += 1
-        
-    for row in range(n - 2, -1, -1): # 4 to 0
-        for col in range(row + 1, n):  
-            if s[row] == s[col] and (col == row + 1 or dp[row+1][col-1]):
-                dp[row][col] = True
-                count += 1
+def countSubstrings_tabulation_2(s):
+    res = 0
+    n = len(s)
+
+    dp = [[0]*n for _ in range(n)]
+
+    for l in range(1,n+1):
+        for i in range(n-l+1):
+            j = i+l - 1
+            if i==j: 
+                dp[i][j] = True
+                res+=1
+            elif s[i]==s[j] and (j==i+1 or dp[i+1][j-1]):
+                dp[i][j] = True
+                res +=1
             else:
-                dp[row][col] = False
-    return count
+                dp[i][j] = False
+    return res             
 
-print(countSubstrings("pqprps"))
-
-def countSubstrings(s):
+def countSubstrings_tabulation_2(s):
     n = len(s) # n = 6
     dp = [[-1] * n for _ in range(n)]
     count = 0
@@ -45,3 +44,23 @@ def countSubstrings(s):
             else:
                 dp[start][end] = False
     return count
+
+def longest_palindrome_subseq(s):
+    res = 0
+    n = len(s)
+
+    dp = [[0] *n for _ in range(n)]
+
+    for l in range(1,n+1):
+        for i in range(n-l+1):
+            j = i+l - 1
+            if i==j: 
+                dp[i][j] = 1
+                
+            elif s[i]==s[j]:
+                dp[i][j] = 2 + dp[i+1][j-1]
+
+            else:
+                dp[i][j] = max(dp[i+1][j], dp[i][j-1])
+                
+    return dp[0][n-1]  
