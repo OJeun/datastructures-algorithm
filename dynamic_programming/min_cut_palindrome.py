@@ -94,3 +94,37 @@ def min_cut_tabulation_2D(s):
                 dp[row][col] = minimum
     return dp[0][length_s-1]
 
+# T: O(n^2), S: O(n^2)
+def min_cut_tabulation_1D(s):
+    length_s = len(s)
+    dp = [[-1] * length_s for _ in range(length_s)]
+    # T: O(n^2), S: O(n^2)
+    for length in range(1, length_s+1):
+        for row in range(length_s - length + 1):
+            col = length + row - 1
+            if row == col:
+                dp[row][col] = True
+            elif s[row] == s[col] and (col == row + 1 or dp[row+1][col-1]):
+                dp[row][col] = True            
+            else:
+                dp[row][col] = False
+    
+    if dp[0][length_s-1] == True:
+        return 0
+    
+    res = [-1] * length_s
+
+    # T: O(n^2), S: O(n)
+    for end in range(length_s):
+        min_cuts = end
+        for start in range(end+1):
+            if dp[start][end]:
+                if start == 0:
+                    min_cuts = 0
+                else:
+                    min_cuts = min(min_cuts, res[start-1] + 1)
+        res[end] = min_cuts
+    
+    return res[length_s-1]
+
+print(min_cut_tabulation_1D("abaac"))
