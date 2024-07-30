@@ -70,3 +70,25 @@ def min_cut_memoization(s):
         return dp[start][end]
     
     return partitions(0, length_s -1)    
+
+def min_cut_tabulation_2D(s):
+    length_s = len(s)
+    dp = [[-1] * length_s for _ in range(length_s)]
+
+    for length in range(1, length_s +1):
+        for row in range(length_s - length + 1):
+            col = row + length - 1
+            if row == col:
+                dp[row][col] = 0
+            
+            elif s[row] == s[col] and (col == row + 1 or dp[row+1][col-1] == 0):
+                dp[row][col] = 0
+            
+            else:
+                minimum = col - row
+                for k in range(row, col):
+                    partition = dp[row][k] + 1 + dp[k+1][col]
+                    minimum = min(minimum, partition)
+                dp[row][col] = minimum
+    return dp[0][length_s-1]
+
