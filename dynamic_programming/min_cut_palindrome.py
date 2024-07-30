@@ -71,6 +71,8 @@ def min_cut_memoization(s):
     
     return partitions(0, length_s -1)    
 
+# Space = O(n^2)
+# Time = O(n^3)
 def min_cut_tabulation_2D(s):
     length_s = len(s)
     dp = [[-1] * length_s for _ in range(length_s)]
