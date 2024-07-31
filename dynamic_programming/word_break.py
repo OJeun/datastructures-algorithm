@@ -32,7 +32,7 @@ def word_break_recursive_2(s, word_dict):
         return False
     return helper(length_s -1)
     
-print(word_break_recursive_2("bbbbbabbbbb", ["b", "bb", "bbb"]))
+# print(word_break_recursive_2("bbbbbabbbbb", ["b", "bb", "bbb"])) 
 
 
 # Time Complexity = O(n * m * k) m = length of dict, k = average word length in dictionary
@@ -58,4 +58,21 @@ def word_break_memoization(s, word_dict):
         return dp[pointer]
     
     return helper(length_s -1)
-        
+
+# Time complexity = O(nmk)
+# Space complexity = O(n)
+def word_break_tabulation(s, word_dict):
+    length_s = len(s)
+    tabulation = [False] * length_s
+
+    for i in range(length_s): # n
+        for word in word_dict: # m
+            if i < len(word) - 1:
+                continue
+            substring = s[i-len(word)+1:i+1] # k (average length of word in word dictionary)
+            if substring == word and (i-len(word)+1 == 0 or tabulation[i-len(word)]):
+                tabulation[i] = True
+                break
+    return tabulation[length_s -1]
+
+print(word_break_tabulation("hottspot", ["hot", "hott","spot"]))
