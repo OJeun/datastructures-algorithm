@@ -8,7 +8,7 @@ def matrix_chain_multiplication(N, arr):
     
         min_cost = float('inf')
         for partition in range(start, end):
-            curr_cost = partitions(1, partition) + partitions(partition+1, end) + arr[start-1] * arr[start] * arr[end]
+            curr_cost = partitions(start, partition) + partitions(partition+1, end) + (arr[start-1] * arr[partition] * arr[end])
             min_cost = min(min_cost, curr_cost)
 
         return min_cost
