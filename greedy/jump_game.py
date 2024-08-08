@@ -15,6 +15,24 @@ def can_jump(nums):
             return True
             
     return False
-        
 
-print(can_jump([1,1,1,1,1,1]))
+
+def can_jumb_recursive(nums):
+    n = len(nums)
+    goal_index = n - 1
+
+    if n == 0:
+        return False
+
+    def helper(goal_index):
+        if goal_index <= 0:
+            return True
+            
+        for i in range(1, goal_index+1):
+            if (goal_index-i) + nums[goal_index-i] >= goal_index:
+                return helper(goal_index - i)
+            
+        return False
+        
+    return helper(goal_index)
+
