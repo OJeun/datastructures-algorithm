@@ -13,3 +13,30 @@ def two_city_sched_cost(costs):
             min_cost += sorted_costs[i][1]
 
     return min_cost
+
+# Time Complexity = O(2^2n)
+# Space Complexity = O(2n)
+def two_city_sched_cost_recursive(costs):
+    n = len(costs)
+    half_of_ppl = n // 2
+
+    def helper(index, a_city, b_city):
+        # Base Case
+        if index > n - 1:
+            return 0
+        
+        city_a_cost = city_b_cost = float('inf')
+        # Recursive Case
+        for i in range(index, n):
+            # Choose city A
+            if a_city > 0:
+                city_a_cost = costs[i][0] + helper(i+1, a_city-1, b_city)
+
+            # Choose city B
+            if b_city > 0:
+                city_b_cost = costs[i][1] + helper(i+1, a_city, b_city-1)
+            
+            return min(city_a_cost, city_b_cost)
+
+
+    return helper(0, half_of_ppl, half_of_ppl)
