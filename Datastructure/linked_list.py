@@ -117,7 +117,7 @@ class LinkedList:
         pre.next = temp.next
         return temp
 
-    # O(n)
+    # O(n), why it should use three pointers?
     def reverse(self):
         # Swap head and tail
         temp = self.head
@@ -133,6 +133,17 @@ class LinkedList:
             current.next = before
             before = current
             current = after
+
+    # O(n), careful with the condition on while loop
+    def find_middle_node(self):
+        slow = self.head
+        fast = self.head
+
+        while fast and fast.next:
+            fast = fast.next.next
+            slow = slow.next
+
+        return slow
 
 
 
