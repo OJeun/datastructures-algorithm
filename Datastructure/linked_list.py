@@ -159,7 +159,7 @@ class LinkedList:
 def find_kth_from_end(linked_list, k):
     slow = fast = linked_list.head
     for _ in range(k):
-        if fast.next is None:
+        if fast is None:
             return None
         fast = fast.next
     
