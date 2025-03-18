@@ -33,6 +33,7 @@ class LinkedList:
     def pop(self):
         if self.head and self.tail:
             first_pointer = self.head
+            second_pointer = self.head
             while first_pointer.next:
                 second_pointer = first_pointer
                 first_pointer = first_pointer.next
@@ -118,18 +119,20 @@ class LinkedList:
 
     # O(n)
     def reverse(self):
+        # Swap head and tail
         temp = self.head
         self.head = self.tail
         self.tail = temp
 
         before = None
-        after = temp.next
+        current = temp
+        
 
         for _ in range(self.length):
-            after = temp.next
-            temp.next = before
-            before = temp
-            temp = after
+            after = current.next
+            current.next = before
+            before = current
+            current = after
 
 
 
