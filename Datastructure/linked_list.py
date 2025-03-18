@@ -168,5 +168,26 @@ def find_kth_from_end(linked_list, k):
         fast = fast.next
     return slow
 
+def partition_list(self, x):
+    smaller_dummy = Node(0)
+    larger_dummy = Node(0)
+        
+    smaller_temp = smaller_dummy
+    larger_temp = larger_dummy
+        
+    temp = self.head
+        
+    while temp:
+        if temp.value < x:
+            smaller_temp.next = temp
+            smaller_temp = temp
+        else:
+            larger_temp.next = temp
+            larger_temp = temp
+            
+        temp = temp.next
+        
+    larger_temp.next = None
+    smaller_temp.next = larger_dummy.next    
 
         
