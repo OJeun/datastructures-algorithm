@@ -119,20 +119,21 @@ class LinkedList:
 
     # O(n), why it should use three pointers?
     def reverse(self):
-        # Swap head and tail
+        before = None
+        current = self.head
+        after = current.next
+
         temp = self.head
         self.head = self.tail
         self.tail = temp
 
-        before = None
-        current = temp
-        
-
-        for _ in range(self.length):
-            after = current.next
+        while current:
             current.next = before
             before = current
             current = after
+            after = after.next
+
+
 
     # O(n), careful with the condition on while loop
     def find_middle_node(self):
@@ -145,6 +146,7 @@ class LinkedList:
 
         return slow
 
+    # O(n)
     def has_loop(self):
         slow = self.head
         fast = self.head
@@ -155,6 +157,77 @@ class LinkedList:
             if slow == fast:
                 return True
         return False
+    # O(1)
+    def partition_list(self, x):
+        smaller_dummy = Node(0)
+        larger_dummy = Node(0)
+            
+        smaller_temp = smaller_dummy
+        larger_temp = larger_dummy
+            
+        temp = self.head
+            
+        while temp:
+            if temp.value < x:
+                smaller_temp.next = temp
+                smaller_temp = temp
+            else:
+                larger_temp.next = temp
+                larger_temp = temp
+                
+            temp = temp.next
+            
+        larger_temp.next = None
+        smaller_temp.next = larger_dummy.next    
+
+    # O(n)
+    def remove_duplicates(self):
+        values = set()
+        
+        prev = None
+        current = self.head
+            
+        while current:
+            if current.value not in values:
+                values.add(current.value)
+                prev = current
+        
+            else:
+                prev.next = current.next
+                self.length -= 1
+                
+            current = current.next
+
+    # O(n), (num * 2) + b = Shift the existing value left by 1 bit (×2), then add the new value.
+    def binary_to_decimal(self):
+        num = 0
+        current = self.head
+        while current:
+            num = num * 2 + current.value
+            current = current.next
+        return num
+
+    def reverse_between(self, start_index, end_index):
+        if self.length <= 1:
+            return
+    
+        dummy_node = Node(0)
+        dummy_node.next = self.head
+        previous_node = dummy_node
+    
+        for i in range(start_index):
+            previous_node = previous_node.next
+    
+        current_node = previous_node.next
+    
+        for i in range(end_index - start_index):
+            node_to_move = current_node.next
+            current_node.next = node_to_move.next
+            node_to_move.next = previous_node.next
+            previous_node.next = node_to_move
+    
+        self.head = dummy_node.next
+
         
 def find_kth_from_end(linked_list, k):
     slow = fast = linked_list.head
@@ -168,26 +241,7 @@ def find_kth_from_end(linked_list, k):
         fast = fast.next
     return slow
 
-def partition_list(self, x):
-    smaller_dummy = Node(0)
-    larger_dummy = Node(0)
-        
-    smaller_temp = smaller_dummy
-    larger_temp = larger_dummy
-        
-    temp = self.head
-        
-    while temp:
-        if temp.value < x:
-            smaller_temp.next = temp
-            smaller_temp = temp
-        else:
-            larger_temp.next = temp
-            larger_temp = temp
-            
-        temp = temp.next
-        
-    larger_temp.next = None
-    smaller_temp.next = larger_dummy.next    
+
+
 
         
