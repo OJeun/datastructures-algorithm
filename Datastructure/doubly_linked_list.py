@@ -151,7 +151,73 @@ class DoublyLinkedList:
         to_be_removed.prev = None
 
         return to_be_removed
+    
+    def reverse(self):
+        temp = self.head
         
+        while temp:
+            temp.next, temp.prev = temp.prev, temp.next
+            temp = temp.prev
+        
+        self.head, self.tail = self.tail, self.head 
+    
+    def swap_first_last(self):
+        if self.length == 0:
+            return False
+        value = self.head.value
+        self.head.value = self.tail.value
+        self.tail.value = value
+        return True
+    
+    def is_palindrome(self):
+        start = self.head
+        end = self.tail
+        
+        for i in range(self.length // 2):
+            if start.value != end.value:
+                return False
+            start = start.next
+            end = end.prev
+            
+        return True
+    
+    def swap_pairs(self):
+        dummy_node = Node(0)
+        dummy_node.next = self.head
+        previous_node = dummy_node
+
+        while self.head and self.head.next:
+            first_node = self.head
+            second_node = self.head.next
+
+            # keep dummy to be connected to the head
+            previous_node.next = second_node
+
+            # Swap a pair of nodes
+            first_node.next = second_node.next
+            second_node.next = first_node
+            first_node.prev = second_node
+            second_node.prev = previous_node
+
+            # Move the pointer
+            previous_node = first_node
+            self.head = first_node.next
+
+        self.head = dummy_node.next
+        self.head.prev = None
+
+
+
+        
+
+
+
+
+
+    
+        
+
+
             
 
             
