@@ -57,6 +57,20 @@ def reverse_string(string):
         
     return reversed_string
 
-
-
+def sort_stack(input_stack):
+    sorted_stack = Stack()
+    
+    while not input_stack.is_empty():
+        temp = input_stack.pop()
+        
+        while not sorted_stack.is_empty() and temp < sorted_stack.peek():
+            input_stack.push(sorted_stack.pop())
+            
+        sorted_stack.push(temp)
+            
+    # Transfer all items from sorted to input_stack
+    while not sorted_stack.is_empty():
+        input_stack.push(sorted_stack.pop())
+        
+    return input_stack
     
