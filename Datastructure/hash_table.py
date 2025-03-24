@@ -59,3 +59,20 @@ def find_duplicates(nums):
             duplicates.append(num)
             
     return duplicates
+
+# sorted("eat")  # ['a', 'e', 't'] # O(nlogn)
+# ''.join(['a', 'e', 't'])  # "aet" # O(n)
+
+# Time Complexity = O(n * klogk), k = the length of each word
+def group_anagrams(strings):
+    anagrams = {}
+
+    for word in strings:
+        canonical = ''.join(sorted(word))
+        if canonical not in anagrams:
+            anagrams[canonical] = [word]
+        else:
+            anagrams_list = anagrams[canonical]
+            anagrams_list.append(word)
+    
+    return list(anagrams.values())
