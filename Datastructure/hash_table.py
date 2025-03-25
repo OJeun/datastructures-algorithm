@@ -124,3 +124,19 @@ def find_pairs(arr1, arr2, target):
             pairs.append((complement, num))
     
     return pairs
+
+# O(n)
+def longest_consecutive_sequence(nums):
+    max_count = 0
+    num_set = set(nums) # O(n)
+    
+    for num in nums:
+        if num - 1 not in num_set:
+            current_num = num
+            current_sequence = 1
+            
+            while current_num + 1 in num_set:
+                current_num += 1
+                current_sequence += 1
+            
+            max_count = max(max_count, current_sequence)
