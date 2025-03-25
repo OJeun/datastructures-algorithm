@@ -76,3 +76,31 @@ def group_anagrams(strings):
             anagrams_list.append(word)
     
     return list(anagrams.values())
+
+# O(n)
+def two_sum(nums, target):
+    num_map = {}
+    
+    for index, num in enumerate(nums):
+        complement = target - num
+        
+        if complement in num_map:
+            return [num_map[complement], index]
+            
+        num_map[num] = index
+        
+    return []
+
+def subarray_sum(nums, target):
+    accumulated = {0: -1}
+    accumulated_sum = 0
+
+    for index, num in enumerate(nums):
+        accumulated_sum += num 
+        complement = accumulated_sum - target 
+
+        if complement in accumulated:
+            return [accumulated[complement] + 1, index]
+        
+        accumulated[accumulated_sum] = index  
+    return []
