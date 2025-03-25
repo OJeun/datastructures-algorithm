@@ -113,6 +113,7 @@ def has_unique_chars(string):
         char_set.add(char)
     return True
 
+# O(n + m)
 def find_pairs(arr1, arr2, target):
     set1 = set(arr1)
     pairs = []
