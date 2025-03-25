@@ -104,3 +104,22 @@ def subarray_sum(nums, target):
         
         accumulated[accumulated_sum] = index  
     return []
+
+def has_unique_chars(string):
+    char_set = set()
+    for char in string:
+        if char in char_set:
+            return False
+        char_set.add(char)
+    return True
+
+def find_pairs(arr1, arr2, target):
+    set1 = set(arr1)
+    pairs = []
+    
+    for num in arr2:
+        complement = target - num
+        if complement in set1:
+            pairs.append((complement, num))
+    
+    return pairs
