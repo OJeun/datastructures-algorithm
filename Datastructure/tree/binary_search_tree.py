@@ -139,3 +139,18 @@ class BinarySearchTree:
         mid_node.right = right_sub_tree
         
         return mid_node
+
+    def invert(self):
+        self.root = self.__invert_tree(self.root)
+
+    def __invert_tree(self, node):
+        if node is None:
+            return None
+            
+        left_sub_tree = self.__invert_tree(node.left)
+        right_sub_tree = self.__invert_tree(node.right)
+        
+        node.left = right_sub_tree
+        node.right = left_sub_tree
+        
+        return node
