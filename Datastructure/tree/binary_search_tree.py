@@ -116,3 +116,26 @@ class BinarySearchTree:
         
     def delete_node(self, value):
         self.__delete_node(self.root, value)
+
+
+    def sorted_list_to_bst(self, nums):
+        self.root = self.__sorted_list_to_bst(nums, 0, len(nums) - 1)
+
+    def __sorted_list_to_bst(self, nums, left, right):
+        if left == right:
+            new_node = Node(nums[left])
+            return new_node
+            
+        if left > right:
+            return None
+            
+        mid = (left + right) // 2
+        mid_node = Node(nums[mid])
+        
+        left_sub_tree = self.__sorted_list_to_bst(nums, left, mid-1)
+        right_sub_tree = self.__sorted_list_to_bst(nums, mid + 1, right)
+        
+        mid_node.left = left_sub_tree
+        mid_node.right = right_sub_tree
+        
+        return mid_node
