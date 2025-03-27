@@ -46,7 +46,8 @@ class MaxHeap:
                 index = max_index
             else:
                 return
-                       
+    
+    # Time complexity: O(logn)
     def remove(self):
         if len(self.heap) == 0:
             return None
@@ -60,5 +61,25 @@ class MaxHeap:
 
         return max_value
             
+# Time complexity: O(n * logk)
+def find_kth_smallest(nums, k):
+    max_heap = MaxHeap()
+
+    for num in nums:
+        max_heap.insert(num)
+        if len(max_heap.heap) > k:
+            max_heap.remove()
+            
+    return max_heap.remove()
 
 
+# O(nlogn), if not use list, it will be O(n)
+def stream_max(nums):
+    max_heap = MaxHeap()
+    max_stream = []
+
+    for num in nums:
+        max_heap.insert(num)             # O(log n)
+        max_stream.append(max_heap.heap[0])  
+
+    return max_stream
