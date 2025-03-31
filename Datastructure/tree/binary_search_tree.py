@@ -154,3 +154,40 @@ class BinarySearchTree:
         node.right = left_sub_tree
         
         return node
+    
+    # O(n)
+    def BFS(self):
+        current = self.root
+        queue = []
+        results = []
+        queue.append(current)
+        
+        while len(queue) > 0:
+            current = queue.pop(0)
+            results.append(current.value)
+            
+            # append left and right nodes of current
+            if current.left:
+                queue.append(current.left)
+            if current.right:
+                queue.append(current.right)
+
+        return results
+    
+    # O(n)
+    def dfs_pre_order(self):
+        current_node = self.root
+        results = []
+        
+        def traverse(current):
+            results.append(current.value)
+            
+            if current.left:
+                traverse(current.left)
+                
+            if current.right:
+                traverse(current.right)
+                
+        traverse(current_node)
+        return results
+    
