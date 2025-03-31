@@ -191,3 +191,41 @@ class BinarySearchTree:
         traverse(current_node)
         return results
     
+    def kth_smallest(self, k):
+        self.kth_smallest_count = 0
+        return self.kth_smallest_helper(self.root, k)
+ 
+    def kth_smallest_helper(self, node, k):
+        if node is None:
+            return None
+ 
+        left_result = self.kth_smallest_helper(node.left, k)
+        if left_result is not None:
+            return left_result
+ 
+        self.kth_smallest_count += 1
+        if self.kth_smallest_count == k:
+            return node.value
+ 
+        right_result = self.kth_smallest_helper(node.right, k)
+        if right_result is not None:
+            return right_result
+ 
+        return None
+    
+    def kth_smallest_with_stack(self, k):
+        current_node = self.root
+        stack = []
+        
+        while current_node or stack:
+            while current_node:
+                stack.append(current_node)
+                current_node = current_node.left
+                
+            node = stack.pop()
+            k -= 1
+            if k == 0:
+                return node.value
+                
+            
+            current_node = node.right
