@@ -228,6 +228,33 @@ class LinkedList:
     
         self.head = dummy_node.next
 
+    # Merge a sorted other list to this linked list
+    # this linked list should already sorted.
+    def merge(self, other_list):
+        dummy_node = Node(0)
+        dummy_node.next = self.head
+        current = dummy_node
+        
+        while self.head and other_list.head:
+            if other_list.head.value < self.head.value:
+                current.next = other_list.head
+                other_list.head = other_list.head.next
+            else:
+                current.next = self.head
+                self.head = self.head.next
+                
+            current = current.next
+            
+        if self.head is not None:
+            current.next = self.head
+        
+        else:
+            current.next = other_list.head
+            self.tail = other_list.tail
+        
+        self.head = dummy_node.next
+        self.length += other_list.length
+
         
 def find_kth_from_end(linked_list, k):
     slow = fast = linked_list.head
@@ -240,6 +267,8 @@ def find_kth_from_end(linked_list, k):
         slow = slow.next
         fast = fast.next
     return slow
+
+
 
 
 
