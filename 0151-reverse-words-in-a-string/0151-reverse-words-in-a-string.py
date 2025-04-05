@@ -1,21 +1,21 @@
 class Solution:
     def reverseWords(self, s: str) -> str:
-        trimmed_s = " ".join(s.split())
-        string_list = list(trimmed_s)
-        self.reverseString(string_list, 0, len(string_list) - 1)
-        start = 0
-        end = 0
+        # trimmed_s = " ".join(s.split())
+        # string_list = list(trimmed_s)
+        # self.reverseString(string_list, 0, len(string_list) - 1)
+        # start = 0
+        # end = 0
 
-        while end < len(string_list):
-            if string_list[end] == " ":
-                self.reverseString(string_list, start, end - 1)
-                start = end + 1
+        # while end < len(string_list):
+        #     if string_list[end] == " ":
+        #         self.reverseString(string_list, start, end - 1)
+        #         start = end + 1
 
-            if end == len(string_list) - 1:
-                self.reverseString(string_list, start, end)
-            end += 1
+        #     if end == len(string_list) - 1:
+        #         self.reverseString(string_list, start, end)
+        #     end += 1
         
-        return "".join(string_list)
+        return " ".join(s.split()[::-1])
 
     def reverseString(self, s_list:list, start:int, end:int):
         while start < end:
