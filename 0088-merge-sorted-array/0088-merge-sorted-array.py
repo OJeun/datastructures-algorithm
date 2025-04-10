@@ -8,6 +8,9 @@ class Solution:
 
         pointer = m - 1
 
+        if j < 0:
+            return
+
         while pointer > -1 and j > -1:
             if nums1[pointer] < nums2[j]:
                 nums1[i] = nums2[j]
