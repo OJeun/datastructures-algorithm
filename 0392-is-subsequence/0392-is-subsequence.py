@@ -6,13 +6,7 @@ class Solution:
         while s_pointer < len(s) and t_pointer < len(t):
             if s[s_pointer] == t[t_pointer]:
                 s_pointer += 1
-                t_pointer += 1
-            else:
-                t_pointer += 1
-            
-        
-        if s_pointer > len(s) - 1:
-            return True
-        else:
-            return False
+            t_pointer += 1
+
+        return s_pointer > len(s) - 1
             
