@@ -10,6 +10,9 @@ class Solution:
         address_random_dict = dict()
         curr = head
 
+        if curr == None:
+            return curr
+
         while curr:
             copied_node = Node(curr.val, curr.next, curr.random)
             address_random_dict[curr] = copied_node
