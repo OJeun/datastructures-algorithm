@@ -1,40 +1,32 @@
-class Node:
-    def __init__(self, x: int, next: 'Node' = None, random: 'Node' = None):
-        self.val = int(x)
-        self.next = next
-        self.random = random
-
-
 class Solution:
     def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
-        address_random_dict = dict()
         curr = head
 
-        if curr == None:
-            return curr
+        if curr is None:
+            return None
 
         while curr:
-            copied_node = Node(curr.val, curr.next, curr.random)
-            address_random_dict[curr] = copied_node
-            curr = curr.next
+            copied_node = Node(curr.val, curr.next, None)
+            curr.next = copied_node
+            curr = copied_node.next
+
+        # original1 → copy1 → original2 → copy2 → original3 → copy3 → None
+        
+        temp = head
+        new_head = temp.next
+
+        # Change random to copied ones
+        while temp:
+            copied = temp.next
+            if temp.random:
+                copied.random = temp.random.next
+            temp = temp.next.next
 
         temp = head
-        while temp:
-            deep_copied = address_random_dict[temp]
-            if temp.next:
-                next_deep_copied = address_random_dict[temp.next]
-                deep_copied.next = next_deep_copied
-            if temp.random:
-                random_deep_copied = address_random_dict[temp.random]
-                deep_copied.random = random_deep_copied
-            temp = temp.next
-
-        new_head = address_random_dict[head]
+        # Change next
+        while temp and temp.next:
+            next_node = temp.next
+            temp.next = next_node.next
+            temp = next_node
 
         return new_head
-
-
-                    
-                    
-
-
