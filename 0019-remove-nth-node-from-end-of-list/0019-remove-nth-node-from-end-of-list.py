@@ -18,12 +18,13 @@ class Solution:
             slow = slow.next
             fast = fast.next
 
-        if slow:
-            slow.next = slow.next.next
-        else:
+        if slow == head and fast == None:
             next_node = head.next
             head.next = None
             head = next_node
+        else:
+            slow.next = slow.next.next
+            
 
         return head
 
