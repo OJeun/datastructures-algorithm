@@ -1,21 +1,18 @@
 class Solution:
     def simplifyPath(self, path: str) -> str:
-        stack = Stack()
+        stack = []
         str_to_list = path.split("/")
         
         for directory in str_to_list:
-            if directory == ".":
-                continue
-            elif directory == "":
+            if directory == "." or directory == "":
                 continue
             elif directory == "..":
-                prev = stack.pop()
-                if prev == None:
-                    continue
+                if stack:
+                    stack.pop()
             else: # file or folder name
-                stack.push(directory)
+                stack.append(directory)
 
-        return "/" + "/".join(stack.stack_list)
+        return "/" + "/".join(stack)
  
 class Stack:
     def __init__(self):
