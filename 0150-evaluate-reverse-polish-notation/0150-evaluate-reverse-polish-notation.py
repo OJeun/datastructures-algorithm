@@ -17,15 +17,3 @@ class Solution:
                 stack.append(result)
         return stack.pop()
 
-    
-def add(op1, op2):
-    return op1 + op2
-
-def subtract(op1, op2):
-    return op1 - op2
-
-def multiply(op1, op2):
-    return op1 * op2
-
-def divide(op1, op2):
-    return math.trunc(op1 / op2)
