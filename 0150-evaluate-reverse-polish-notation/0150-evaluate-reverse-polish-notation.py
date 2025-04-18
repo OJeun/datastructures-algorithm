@@ -1,11 +1,11 @@
 class Solution:
     def evalRPN(self, tokens: list[str]) -> int:
         arithmetic_expression = {
-            "+", 
-            "-", 
-            "*", 
-            "/"
-            }
+    '+': lambda a, b: a + b,
+    '-': lambda a, b: a - b,
+    '*': lambda a, b: a * b,
+    '/': lambda a, b: int(a / b)
+}
         stack = []
         for token in tokens:
             if token not in arithmetic_expression:
@@ -13,14 +13,7 @@ class Solution:
             else:
                 second_operand = stack.pop()
                 first_operand = stack.pop()
-                if token == "+":
-                    result = first_operand + second_operand
-                elif token == "-":
-                    result = first_operand - second_operand
-                elif token == "*":
-                    result = first_operand * second_operand
-                elif token == "/":
-                    result = int(first_operand / second_operand)
+                result = arithmetic_expression[token](first_operand, second_operand)
                 stack.append(result)
         return stack.pop()
 
