@@ -1,10 +1,10 @@
 class Solution:
     def evalRPN(self, tokens: list[str]) -> int:
         arithmetic_expression = {
-            "+": add, 
-            "-": subtract, 
-            "*": multiply, 
-            "/": divide
+            "+", 
+            "-", 
+            "*", 
+            "/"
             }
         stack = []
         for token in tokens:
@@ -13,7 +13,14 @@ class Solution:
             else:
                 second_operand = stack.pop()
                 first_operand = stack.pop()
-                result = arithmetic_expression[token](first_operand, second_operand)
+                if token == "+":
+                    result = first_operand + second_operand
+                elif token == "-":
+                    result = first_operand - second_operand
+                elif token == "*":
+                    result = first_operand * second_operand
+                elif token == "/":
+                    result = int(first_operand / second_operand)
                 stack.append(result)
         return stack.pop()
 
