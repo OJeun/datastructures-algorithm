@@ -8,9 +8,7 @@ class BSTIterator:
     def __init__(self, root: Optional[TreeNode]):
         self.root = root
         self.stack = []
-        while root:
-            self.stack.append(root)
-            root = root.left
+        self.populate_stack(root)
 
     def populate_stack(self, temp):
         while temp:
@@ -19,10 +17,8 @@ class BSTIterator:
 
     def next(self) -> int:
         node = self.stack.pop()
-        right = node.right
-        while right:
-            self.stack.append(right)
-            right = right.left
+        if node.right:
+            self.populate_stack(node.right)
         return node.val
 
     def hasNext(self) -> bool:
