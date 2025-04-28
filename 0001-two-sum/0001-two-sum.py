@@ -4,6 +4,6 @@ class Solution:
 
         for i in range(len(nums)):
             substraction = target - nums[i]
-            if nums_dict.get(substraction):
-                if nums_dict.get(substraction) > i:
-                    return [nums_dict[substraction], i]
+            index = nums_dict.get(substraction)
+            if index and index > i:
+                return [nums_dict[substraction], i]
