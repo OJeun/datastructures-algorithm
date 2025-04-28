@@ -9,18 +9,17 @@ class Solution:
         self.min = float('inf')
         self.prev = None
 
-        def sort_binary_tree(node):
+        def in_order(node):
             if not node:
-                return None
-            
-            sort_binary_tree(node.left)
-            
-            if self.prev:
-                self.min = min(self.min, abs(self.prev.val - node.val))
-            self.prev = node
+                return
 
-            sort_binary_tree(node.right)
+            in_order(node.left)
 
+            if self.prev is not None:
+                self.min = min(self.min, node.val - self.prev)
+            self.prev = node.val
 
-        sort_binary_tree(root)
+            in_order(node.right)
+
+        in_order(root)
         return self.min
