@@ -2,22 +2,20 @@ import math
 class Solution:
     def isHappy(self, n: int) -> bool:
         seen = set()
-        str_n = str(n)
+        
+        while n != 1:
+            new_n = 0
+            digit = n % 10
+            new_n += digit * digit
+            n //= 10
 
-        while True:
-            square_sum = 0
-            for digit in str_n:
-                square_sum += pow(int(digit), 2)
-
-            if square_sum == 1:
-                return True
-            
-            if square_sum in seen:
+            if new_n in seen:
                 return False
             
-            seen.add(square_sum)
+            seen.add(new_n)
 
-            str_n = str(square_sum)
+        return True
 
+        
 
             
