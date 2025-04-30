@@ -13,27 +13,19 @@ class Solution:
         if not node:
             return node
 
-        que = deque()
-        que.append(node)
+        self.copy_dict = dict()
 
-        original_to_cloned = dict()
+        def dfs(node):
+            if node not in self.copy_dict:
+                self.copy_dict[node] = Node(node.val)
 
-        while que:
-            vertex = que.popleft()
+            for neighbor in node.neighbors:
+                if neighbor not in self.copy_dict:
+                    self.copy_dict[neighbor] = Node(neighbor.val)
+                    dfs(neighbor)
 
-            if vertex not in original_to_cloned:
-                new_node = Node(vertex.val)
-                original_to_cloned[vertex] = new_node
+                self.copy_dict[node].neighbors.append(self.copy_dict[neighbor])
 
-            cloned_vertex = original_to_cloned[vertex]
-
-            for neighbor in vertex.neighbors:
-                copied_neighbor = original_to_cloned.get(neighbor)
-                if copied_neighbor is None:
-                    new_neighbor = Node(neighbor.val)
-                    original_to_cloned[neighbor] = new_neighbor
-                    que.append(neighbor)
+        dfs(node)
+        return self.copy_dict[node]
                 
-                original_to_cloned[neighbor].neighbors.append(cloned_vertex)
-                
-        return original_to_cloned[node]
