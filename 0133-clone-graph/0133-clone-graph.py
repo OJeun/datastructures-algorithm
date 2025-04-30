@@ -1,31 +1,22 @@
-"""
-# Definition for a Node.
-class Node:
-    def __init__(self, val = 0, neighbors = None):
-        self.val = val
-        self.neighbors = neighbors if neighbors is not None else []
-"""
-
-from typing import Optional
-from collections import deque
 class Solution:
     def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
         if not node:
-            return node
+            return None
 
-        self.copy_dict = dict()
+        original_to_cloned = {}
 
-        def dfs(node):
-            if node not in self.copy_dict:
-                self.copy_dict[node] = Node(node.val)
+        def dfs(current):
+            if current in original_to_cloned:
+                return original_to_cloned[current]
 
-            for neighbor in node.neighbors:
-                if neighbor not in self.copy_dict:
-                    self.copy_dict[neighbor] = Node(neighbor.val)
-                    dfs(neighbor)
+           
+            copy = Node(current.val)
+            original_to_cloned[current] = copy
 
-                self.copy_dict[node].neighbors.append(self.copy_dict[neighbor])
+            
+            for neighbor in current.neighbors:
+                copy.neighbors.append(dfs(neighbor))
 
-        dfs(node)
-        return self.copy_dict[node]
-                
+            return copy
+
+        return dfs(node)
