@@ -34,8 +34,7 @@ class Solution:
                     original_to_cloned[neighbor] = new_neighbor
                     que.append(neighbor)
                 
-                original_to_cloned[neighbor].neighbors.append(cloned_vertex)
+                cloned_vertex.neighbors.append(original_to_cloned[neighbor])
 
-                
 
         return original_to_cloned[node]
