@@ -1,36 +1,38 @@
 class Solution:
-    def solve(self, board: List[List[str]]) -> None:
+    def solve(self, board: list[list[str]]) -> None:
         columns = len(board[0])
         rows = len(board)
         self.board = board
+        self.seen = set()
 
-        def dfs(r, c, track) -> bool:
-            if (r <= 0 or c <= 0 or r >= rows - 1 or c >= columns - 1):
-                return False if self.board[r][c] == "O" else True
+        def dfs(r, c):
+            self.seen.add((r,c))
+            self.board[r][c] = "S"
 
-            if (r, c) in track:
-                return True
+            for dr, dc in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                calc_r, calc_c = r + dr, c + dc
+                if calc_r >= 0 and calc_r < rows and calc_c >= 0 and calc_c < columns:
+                    if self.board[calc_r][calc_c] == "O" and (calc_r, calc_c) not in self.seen:
+                        dfs(calc_r, calc_c)
 
-            if board[r][c] != "O":
-                return True
-                
-            track.add((r, c))
-            
-            up = dfs(r-1, c, track)
-            down = dfs(r+1, c, track)
-            right = dfs(r, c+1, track)
-            left = dfs(r, c-1, track)
 
-            return up and down and right and left
-
-        def updateBoard(track):
-            print(track)
-            for r, c in track:
-                self.board[r][c] = "X"
-
+        def updateBoard():
+            for row in range(rows):
+                for column in range(columns):
+                    if self.board[row][column] == "O":
+                        self.board[row][column] = "X"
+                    if self.board[row][column] == "S":
+                        self.board[row][column] = "O"
+                        
         for row in range(rows):
             for column in range(columns):
-                track = set()
-                if board[row][column] == "O":
-                    if dfs(row, column, track):
-                        updateBoard(track)
+                if (0 < row < rows - 1) and (column == 0 or column == columns - 1):
+                    if self.board[row][column] == "O" and (row, column) not in self.seen:
+                        dfs(row, column)
+
+                if row == 0 or row == rows - 1:
+                     if self.board[row][column] == "O" and (row, column) not in self.seen:
+                        dfs(row, column)
+
+            
+        updateBoard()
