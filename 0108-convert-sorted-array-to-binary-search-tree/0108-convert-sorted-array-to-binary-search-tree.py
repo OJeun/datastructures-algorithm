@@ -10,9 +10,6 @@ class Solution:
             if start > end:
                 return None
 
-            if start == end:
-                return TreeNode(nums[start])
-
             mid = (start + end) // 2
 
             sub_root_value = nums[mid]
