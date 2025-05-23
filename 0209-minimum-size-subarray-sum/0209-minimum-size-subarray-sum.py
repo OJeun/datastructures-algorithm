@@ -9,12 +9,11 @@ class Solution:
         for right in range(len(nums)):
             subarray_sum += nums[right]
             if subarray_sum >= target:
-                min_length = min(min_length, right - left + 1)
+               
                 while subarray_sum >= target:
+                    min_length = min(min_length, right - left + 1)
                     subarray_sum -= nums[left]
                     left += 1
 
-                    if subarray_sum >= target:
-                        min_length = min(min_length, right - left + 1)
 
         return 0 if min_length == float('inf') else min_length
