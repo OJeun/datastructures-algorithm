@@ -7,7 +7,7 @@ class Solution:
             if mid_element == target:
                 return mid
 
-            if left >= right:
+            if left > right:
                 return -1
 
             if nums[left] <= nums[mid]:
