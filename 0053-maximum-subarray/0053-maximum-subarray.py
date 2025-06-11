@@ -7,8 +7,7 @@ class Solution:
             return nums[0]
 
         for curr in range(1, n):
-            max_sum = max(max_sum, nums[curr] + nums[curr - 1], nums[curr], nums[curr - 1])
-            max_sum_including_curr = max(nums[curr], nums[curr] + nums[curr - 1])
-            nums[curr] = max_sum_including_curr
+            nums[curr] = max(nums[curr], nums[curr] + nums[curr - 1])
+            max_sum = max(max_sum, nums[curr - 1], nums[curr])
 
         return max_sum
