@@ -3,11 +3,7 @@ class Solution:
         n = len(digits)
         carry = 1
 
-        while carry == 1:
-            if n == 0:
-                digits.insert(0, 1)
-                return digits 
-                
+        while n > 0:
             digit = digits[n - 1]
             add_one = digit + carry
 
@@ -17,7 +13,10 @@ class Solution:
             else:
                 digits[n-1] = add_one
                 carry = 0
-                
+                break
             n -= 1
+
+        if carry == 1:
+            digits.insert(0, 1)
 
         return digits
