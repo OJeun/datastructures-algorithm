@@ -3,7 +3,7 @@ class Solution:
         n = len(digits)
         carry = 1
 
-        while n > -1 and carry == 1:
+        while carry == 1:
             if n == 0:
                 digits.insert(0, 1)
                 return digits 
