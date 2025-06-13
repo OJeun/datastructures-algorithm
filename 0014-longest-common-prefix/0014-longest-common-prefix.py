@@ -1,23 +1,23 @@
 class Solution:
-    def longestCommonPrefix(self, strs: List[str]) -> str:
+    def longestCommonPrefix(self, strs: list[str]) -> str:
         result = ""
-        first_word = strs[0]
+        is_prefix = True
+        
+        # pointer?
+        pointer = 0
 
-        for i in range(len(first_word)):
-            is_same = True
-            char = first_word[i]
+        while is_prefix and pointer < len(strs[0]):
+            str_at_pointer = strs[0][pointer]
 
-            for word in strs[1:]:
-                if i > len(word) - 1:
-                    is_same = False
+            for i in range(1, len(strs)):
+                word = strs[i]
+                if pointer >= len(word) or str_at_pointer != word[pointer]:
+                    is_prefix = False
                     break
-                if i < len(word) and word[i] != char:
-                    is_same = False
-                    break
 
-            if is_same:
-                result += char
-            else:
-                break
+            if is_prefix:
+                result += str_at_pointer
+
+            pointer += 1
 
         return result
