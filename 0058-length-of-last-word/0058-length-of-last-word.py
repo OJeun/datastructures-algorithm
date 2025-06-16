@@ -1,13 +1,13 @@
 class Solution:
     def lengthOfLastWord(self, s: str) -> int:
-        last_char_index = len(s) - 1
-        length_of_last_word = 0
+        end = len(s) - 1
 
-        while s[last_char_index] == " ":
-            last_char_index -= 1
+        while s[end] == " ":
+            end -= 1
 
-        while last_char_index > -1 and s[last_char_index] != " ":
-            length_of_last_word += 1
-            last_char_index -= 1
+        last_char_in_substring = end 
 
-        return length_of_last_word
+        while end >= 0 and s[end] != " ":
+            end -= 1
+
+        return last_char_in_substring - end 
