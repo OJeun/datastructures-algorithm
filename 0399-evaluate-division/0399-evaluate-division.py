@@ -1,6 +1,5 @@
-from collections import defaultdict
 class Solution:
-    def calcEquation(self, equations: List[List[str]], values: List[float], queries: List[List[str]]) -> List[float]:
+    def calcEquation(self, equations, values, queries) -> list[float]:
         graph = defaultdict(dict)
         result = []
 
@@ -21,7 +20,7 @@ class Solution:
 
             stack = [(start, 1)]
             visited = set()
-
+            
             while stack:
                 prev = stack.pop()
                 for neighbor, weight in graph[prev[0]].items():
@@ -29,26 +28,31 @@ class Solution:
                     if neighbor == target:
                         return acc_value
                     if neighbor not in visited:
-                        stack.append((neighbor, prev[1] * weight))
+                        stack.append((neighbor, acc_value))
                         visited.add(neighbor)
             
             return -1
+
+        def dfs_recursion(curr, target, acc):
+            if curr not in graph or target not in graph:
+                return -1
+            
+            visited.add(curr)
+
+            for neighbor, weight in graph[curr].items():
+                if neighbor == target:
+                    return acc * weight
+                if neighbor not in visited:
+                    dfs_result = dfs_recursion(neighbor, target, acc*weight)
+                    if dfs_result is not None:
+                        return dfs_result
+
                 
 
         for query in queries:
             numerator = query[0]
             denumerator = query[1]
-
-            result.append(dfs_iteration(numerator, denumerator))
+            visited = set()
+            result.append(dfs_recursion(numerator, denumerator, 1))
 
         return result
-                
-
-
-
-
-
-                
-
-
-                    
