@@ -1,34 +1,54 @@
 from collections import defaultdict
 class Solution:
     def calcEquation(self, equations: List[List[str]], values: List[float], queries: List[List[str]]) -> List[float]:
-        graph = dict()
-        graph = defaultdict(list)
-        queries_result = []
+        graph = defaultdict(dict)
+        result = []
 
-        for (f, t), value in zip(equations, values):
-            graph[f].append((t, value))
-            graph[t].append((f, 1/value))
+        # fill up the two-way graph
+        for index in range(len(equations)):
+            equation = equations[index]
+            value = values[index]
 
-        def dfs(f, t, visited, acc):
-            visited.add(f)
-            if f == t:
-                return acc
-            for connected_node in graph[f]:
-                if connected_node[0] not in visited:     
-                    new_acc = acc * connected_node[1]
-                    result = dfs(connected_node[0], t, visited, new_acc)
-                    if result != -1:
-                        return result 
-            return -1 
-           
+            numerator = equation[0]
+            denumerator = equation[1]
+
+            graph[numerator][denumerator] = value
+            graph[denumerator][numerator] = 1/value
+
+        def dfs_iteration(start, target):
+            if start not in graph or target not in graph:
+                return -1
+
+            stack = [(start, 1)]
+            visited = set()
+
+            while stack:
+                prev = stack.pop()
+                for neighbor, weight in graph[prev[0]].items():
+                    acc_value = prev[1] * weight
+                    if neighbor == target:
+                        return acc_value
+                    if neighbor not in visited:
+                        stack.append((neighbor, prev[1] * weight))
+                        visited.add(neighbor)
+            
+            return -1
+                
 
         for query in queries:
             numerator = query[0]
-            denominator = query[1]
-            if numerator not in graph or denominator not in graph:
-                queries_result.append(-1.0)
-            else:
-                visited = set()
-                queries_result.append(dfs(numerator, denominator, visited, 1))
+            denumerator = query[1]
 
-        return queries_result
+            result.append(dfs_iteration(numerator, denumerator))
+
+        return result
+                
+
+
+
+
+
+                
+
+
+                    
