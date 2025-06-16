@@ -5,28 +5,26 @@ class ListNode:
         self.next = next
 class Solution:
     def partition(self, head: Optional[ListNode], x: int) -> Optional[ListNode]:
-        if head is None or head.next is None:
-            return head
+        larger_dummy = ListNode()
+        larger_temp = larger_dummy
 
-        smaller_ll = ListNode(0, None)
-        larger_ll = ListNode(0, None)
+        smaller_dummy = ListNode()
+        smaller_temp = smaller_dummy
 
-        smaller_pointer = smaller_ll
-        larger_pointer = larger_ll
+        while head:
+            if head.val < x:
+                smaller_temp.next = head
+                smaller_temp = head
 
-        temp = head
-
-        while temp:
-            if temp.val < x:
-                smaller_pointer.next = temp
-                smaller_pointer = smaller_pointer.next
             else:
-                larger_pointer.next = temp
-                larger_pointer = larger_pointer.next
-            temp = temp.next
-            
-        larger_pointer.next = None
-        smaller_pointer.next = larger_ll.next
-        head = smaller_ll.next
+                larger_temp.next = head
+                larger_temp = head
 
-        return head
+            head = head.next
+
+        smaller_temp.next = larger_dummy.next
+        larger_temp.next = None
+
+        return smaller_dummy.next
+            
+
