@@ -1,28 +1,19 @@
 class Solution:
     def lengthOfLIS(self, nums: list[int]) -> int:
-        nums_length = len(nums)
-        max_return = 1
-        dp = {}
+        longest = 1
+        n = len(nums)
+        dp = [1] * n
 
-        def helper(start):
-            if start == nums_length - 1:
-                return 1
+        for curr in range(1, n):
+            temp_to_track_longest = 1
+            for prev in range(curr):
+                if nums[curr] > nums[prev]:
+                    temp_to_track_longest = max(temp_to_track_longest, dp[prev] + 1)
+            dp[curr] = temp_to_track_longest
+            longest = max(longest,temp_to_track_longest)
+        return longest
+
+
             
-            if dp.get(start) is not None:
-                return dp.get(start)
-
-            result = 1
-
-            for index in range(start + 1, nums_length):
-                if nums[index] > nums[start]:
-                    result = max(result, helper(index) + 1)
-
-            dp[start] = result
-            return result
-
-        for i in range(nums_length):
-            max_return = max(max_return, helper(i))
-
-        return max_return
 
                 
