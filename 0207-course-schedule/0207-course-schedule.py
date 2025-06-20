@@ -1,34 +1,37 @@
 from collections import defaultdict
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        prerequisites_graph = defaultdict(list)
-        visiting = set()
+        graph = defaultdict(list) # key: prerequisite, values: courses after take a prerequisite
 
-        for courses in prerequisites:
-            prerequisite = courses[0]
-            course = courses[1]
-            prerequisites_graph[prerequisite].append(course)
-        
-        def cycle(course, tracker):
-            if course in tracker:
-                return True
+        for prerequisite in prerequisites:
+            # prerequisite = [0, 1]
+            pre_course = prerequisite[1]
+            course = prerequisite[0]
 
-            if course in visiting:
+            graph[pre_course].append(course)
+
+        visited = set()
+
+        def dfs(course):
+            if course in visited:
                 return False
 
-            tracker.add(course)
+            visited.add(course)
+
+            for next_course in graph[course]:    
+                if dfs(next_course) == False:
+                    return False
+
+            visited.remove(course)
+            return True
+                
+
+        for num in range(numCourses): 
+            if num in graph and num not in visited:
+                if dfs(num) == False:
+                    return False
             
-            for next_course in prerequisites_graph[course]:
-                if cycle(next_course, tracker):
-                    return True
-
-            visiting.add(course)
-            tracker.remove(course)
-            return False
-
-        for course in range(numCourses):
-            tracker = set()
-            if course not in visiting and cycle(course, tracker):
-                return False
-
         return True
+
+
+            
