@@ -1,9 +1,21 @@
 class Solution:
     def climbStairs(self, n: int) -> int:
-        if n == 1:
-            return 1
-        
-        if n == 2:
-            return 2
+        dp = [0 for _ in range(n+1)]
+        dp[1] = 1
 
-        return self.climbStairs(n-1) + self.climbStairs(n-2)
+        def helper(nth_stair):
+            if nth_stair <= 1:
+                return 1
+
+            if dp[nth_stair] > 0:
+                return dp[nth_stair]
+
+            two_steps = helper(nth_stair - 2) 
+            one_steps = helper(nth_stair - 1) 
+
+            total = two_steps + one_steps
+
+            dp[nth_stair] = total
+            return total
+
+        return helper(n)
