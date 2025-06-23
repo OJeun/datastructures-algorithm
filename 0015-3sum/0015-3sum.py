@@ -5,6 +5,9 @@ class Solution:
         output = []
 
         for curr in range(nums_length - 2):
+            if nums[curr] > 0:
+                return output
+                
             if curr > 0 and nums[curr] == nums[curr - 1]:
                 continue
 
