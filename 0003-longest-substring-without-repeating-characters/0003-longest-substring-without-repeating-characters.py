@@ -1,23 +1,30 @@
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        s_length = len(s)
-        distinct_char = set()
+        if len(s) <= 1:
+            return len(s)
+        # create a variable to track the max substring length
         max_length = 1
-        left = 0
+        # define two pointers, start and end
+        end = 1 
+        start = 0
+        seen = set(s[0])
 
-        if s_length == 0:
-            return 0
+        # Iterate string and adjust two pointer not to contain duplicates
+        while start < len(s) and end < len(s):
+            if s[end] not in seen:
+                seen.add(s[end])
+                end += 1
 
-        for right in range(s_length):
-            char = s[right]
+            else: # s[end] is in seen
+                seen.remove(s[start])
+                start += 1
 
-            if char not in distinct_char:
-                distinct_char.add(char)
-            else:
-                max_length = max(max_length, right - left)
-                while s[left] != char:
-                    distinct_char.remove(s[left])
-                    left += 1
-                left += 1
-        max_length = max(max_length, right - left + 1)
+            max_length = max(end - start, max_length)
+
         return max_length
+
+
+        # s = "abcbba"
+
+
+        # Return the max substring length
