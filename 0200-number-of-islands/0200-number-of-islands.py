@@ -19,7 +19,7 @@ class Solution:
                     
                     # traverse the grid using bfs 
                     while len(queue) > 0:
-                        r, c = queue.pop()
+                        r, c = queue.popleft()
                         grid[r][c] = 'v'
                         # up, (r-1, c)
                         if r - 1 >= 0 and grid[r-1][c] == "1":
