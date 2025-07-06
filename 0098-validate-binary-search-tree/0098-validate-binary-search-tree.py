@@ -6,22 +6,21 @@
 #         self.right = right
 class Solution:
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
-        def helper(node, min_val, max_val):
-            if not node:
+        # define recursive helper funtion(node, boundary)
+        def helper(node, max_val, min_val):
+            if node is None:
                 return True
 
-            if not (min_val < node.val < max_val):
+            if not(min_val < node.val < max_val):
                 return False
 
-            # if node.left:
-            #     min_val = node.val
+            left_is_valid = helper(node.left, node.val, min_val)
 
-            # if node.right:
-            #     min_val = node.val
+            right_is_valid = helper(node.right, max_val, node.val)
 
-            return helper(node.left, min_val, node.val) and helper(node.right, node.val, max_val)
+            return left_is_valid and right_is_valid
 
-    
-        return helper(root, float('-inf'), float('inf'))
+            
+            
 
-        
+        return helper(root, float('inf'), float('-inf'))
