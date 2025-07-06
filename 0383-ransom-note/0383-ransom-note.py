@@ -1,19 +1,21 @@
 class Solution:
     def canConstruct(self, ransomNote: str, magazine: str) -> bool:
-        magazine_dict = {}
-        
-        for i in range(len(magazine)):
-            char = magazine[i]
-            magazine_dict[char] = magazine_dict.get(char, 0) + 1
+        # Create a dictionary where the key is letter, value is count
+        letters = dict()
+        for char in magazine:
+            letters[char] = letters.get(char, 0) + 1
 
+        # iterate each character in ransomNote 
         for char in ransomNote:
-            if magazine_dict.get(char) is not None:
-                occurence = magazine_dict.get(char)
-                if occurence > 0:
-                    magazine_dict[char] = occurence - 1
-                else:
-                    return False
-            else:
+            # check current character exists in dict, and its cound is at least 1
+            count = letters.get(char)
+            
+            if not count or count < 1:
                 return False
-
+            else:
+                letters[char] -= 1
+                # if it is not, return False
+                # if it is, decrease its count by 1 and continue
+            
+        # If I get through the entire for loop, return True
         return True
