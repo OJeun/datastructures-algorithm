@@ -3,51 +3,35 @@
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
-
-
 class Solution:
-    def addTwoNumbers(
-        self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+
+        # Initailize carry variable to 0
+        carry = 0
         dummy = ListNode()
-        result = dummy
-        added = 0
+        current = dummy
 
-        while l1 and l2:
-            two_sum = l1.val + l2.val + added
-            added = 0
-            if two_sum > 9:
-                added = 1
-                two_sum -= 10
+        # Use while loop until both stay in the boundary
+        while l1 or l2 or carry:
+            # calculate the sum of two digits and carry 
+            first_val = l1.val if l1 else 0
+            second_val = l2.val if l2 else 0
+            sum_of_two_digits = first_val + second_val + carry
+            # store that calculated value in new linked list
+            new_node = ListNode(sum_of_two_digits % 10)
+            current.next = new_node
+            current = new_node
+            # update the carry
+            carry = sum_of_two_digits // 10
 
-            new_node = ListNode(two_sum)
-            result.next = new_node
-            result = result.next
-            l1 = l1.next
-            l2 = l2.next
+            l1 = l1.next if l1 else None
+            l2 = l2.next if l2 else None
 
-        while l1:
-            sum_digit = added + l1.val
-            added = 0
-            if sum_digit > 9:
-                added = 1
-                sum_digit -= 10
-            new_node = ListNode(sum_digit)
-            result.next = new_node
-            result = result.next
-            l1 = l1.next
-
-        while l2:
-            sum_digit = added + l2.val
-            added = 0
-            if sum_digit > 9:
-                added = 1
-                sum_digit -= 10
-            new_node = ListNode(sum_digit)
-            result.next = new_node
-            l2 = l2.next
-            result = result.next
-
-        if added:
-            result.next = ListNode(1)
+        if carry > 0:
+            new_digit = ListNode(1)
+            current.next = new_digit
 
         return dummy.next
+
+
+
