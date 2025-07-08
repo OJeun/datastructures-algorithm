@@ -8,13 +8,15 @@ class Solution:
         # slow, fast = head 
         slow, fast = head, head
 
-        # when linked list has only one element
-        if head.next is None:
-            return None
-
         # move fast pointer n nodes ahead of head using for loop
         for _ in range(n):
             fast = fast.next
+        
+        if fast is None: # remove head
+            next_node = head.next
+            head.next = None
+            head = next_node
+            return head
 
         # traverse linked list until fast reach to the end
         while fast and fast.next:
@@ -23,15 +25,11 @@ class Solution:
             slow = slow.next
 
          # if slow == head: remove head node and move head pointer to the next      
-        if fast is None: # remove head
-            next_node = head.next
-            head.next = None
-            head = next_node
-        else:
+
         # remove a node next to slow
-            to_be_removed = slow.next
-            slow.next = to_be_removed.next
-            to_be_removed.next = None
+        to_be_removed = slow.next
+        slow.next = to_be_removed.next
+        to_be_removed.next = None
 
         # return head
         return head
