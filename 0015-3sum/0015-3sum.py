@@ -1,40 +1,44 @@
 class Solution:
-    def threeSum(self, nums: list[int]) -> list[list[int]]:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        # sort the nums in-place
         nums.sort()
-        nums_length = len(nums)
-        output = []
+        # triplets = [] => include all the triplets whose sum add up to 0
+        triplets = []
 
-        for curr in range(nums_length - 2):
-            if nums[curr] > 0:
-                return output
-                
-            if curr > 0 and nums[curr] == nums[curr - 1]:
+
+        # while first is in boundary(first < length of nums)
+        for first, value in enumerate(nums):
+            if first > 0 and nums[first] == nums[first - 1]:
                 continue
-
-            left = curr + 1
-            right = nums_length - 1
-
             
+            second = first + 1
+            third = len(nums) - 1
 
-            while left < right:
-                three_sum = nums[curr] + nums[left] + nums[right]
+            while second < third:
+                complement = -nums[first]
+                two_sum = nums[second] + nums[third]
+                if two_sum < complement: 
+                    # move second pointer to the next 
+                    second += 1
 
-                if three_sum > 0:
-                    right -= 1
+                elif two_sum > complement:
+                    # decrease third by 1
+                    third -= 1
 
-                elif three_sum < 0:
-                    left += 1
-
+                # else ==> find 0!
                 else:
-                    output.append([nums[curr], nums[left], nums[right]])
+                    triplets.append([nums[first], nums[second], nums[third]])
+                    third -= 1
+                    second += 1
+                    while second < third and nums[second] == nums[second -1]:
+                        second += 1
                     
-                    while left < right and nums[right] == nums[right - 1]:
-                        right -= 1
-                    
-                    while left < right and nums[left] == nums[left + 1]:
-                        left += 1
 
-                    right -= 1
-                    left += 1
-                    
-        return output
+
+        # return triplets
+        return triplets
+
+                
+
+
+
