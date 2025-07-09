@@ -1,74 +1,35 @@
 class Solution:
-    def bubbleSort(self, nums):
-        # Compare ith and (i+1)th element
-        for j in range(len(nums) - 1, 0, -1):
-            for i in range(0, j): 
-                if nums[i] > nums[i+1]:
-                    nums[i], nums[i+1] = nums[i+1], nums[i]
-        return nums
+    # merge helper funciton
+    def merge(self, l1, l2) -> List[int]:
+        output = []
+        first, second = 0, 0
+        while first < len(l1) and second < len(l2):
+            if l1[first] > l2[second]:
+                output.append(l2[second])
+                second += 1
+            else:
+                output.append(l1[first])
+                first += 1
 
-    def selectionSort(self, nums):
-        for i in range(len(nums) - 1): # 0 - 5
-            min_index = i
-            for j in range(i + 1, len(nums)): # 0 - 5
-                if nums[j] < nums[min_index]:
-                    min_index = j
-            if min_index != i:
-                nums[min_index], nums[i] = nums[i], nums[min_index]
+        while first < len(l1):
+                output.append(l1[first])
+                first += 1
 
-        return nums
+        while second < len(l2):
+                output.append(l2[second])
+                second += 1   
 
-    def insertionSort(self, nums):
-        for i in range(1, len(nums)):
-            current = nums[i]
+        return output
 
-            while i > 0 and nums[i-1] > nums[i]:
-                nums[i] = nums[i-1]
-                nums[i-1] = current
-                i -= 1
-
-        return nums
-
-    def mergeSort(self, nums):
+    def sortArray(self, nums: List[int]) -> List[int]: # return sorted array
+        # Base case => if length of nums is one
         if len(nums) == 1:
             return nums
 
-        half_index = len(nums) // 2
+        mid = len(nums) // 2
 
-        sorted_first_half = self.mergeSort(nums[:half_index])
-        sorted_second_half = self.mergeSort(nums[half_index:])
+        left = self.sortArray(nums[:mid])
 
-        new_list = []
-        i = 0
-        j = 0
+        right = self.sortArray(nums[mid:])
 
-        while i <= len(sorted_first_half) - 1 and j <= len(sorted_second_half) - 1:
-            if sorted_first_half[i] <= sorted_second_half[j]:
-                new_list.append(sorted_first_half[i])
-                i += 1
-            else:
-                new_list.append(sorted_second_half[j])
-                j += 1
-        
-        while i < len(sorted_first_half):
-            new_list.append(sorted_first_half[i])
-            i+=1
-
-        while j < len(sorted_second_half):
-            new_list.append(sorted_second_half[j])
-            j+=1
-
-        return new_list
-
-
-     
-    def sortArray(self, nums: List[int]) -> List[int]:
-        return self.mergeSort(nums)
-
-
-                
-
-                
-
-
-
+        return self.merge(left, right)
