@@ -1,17 +1,23 @@
 class Solution:
     def twoSum(self, numbers: List[int], target: int) -> List[int]:
-        small_poiner = 0
-        large_pointer = len(numbers) - 1
+        # start = 0, end = length - 1
+        start = 0
+        end = len(numbers) - 1
+        
+        # while start <= end:
+        while start <= end:
+            # sum of start and end
+            two_sum = numbers[start] + numbers[end]
 
-        while small_poiner < large_pointer:
-            if numbers[small_poiner] + numbers[large_pointer] == target:
-                return [small_poiner + 1, large_pointer + 1]
+            if two_sum < target:
+                # increase start by 1
+                start += 1
 
-            if numbers[small_poiner] + numbers[large_pointer] > target:
-                large_pointer -= 1
+            # elif sum > target:
+            elif two_sum > target:
+                # decrease end by 1
+                end -= 1
 
-            if numbers[small_poiner] + numbers[large_pointer] < target:
-                small_poiner += 1
-
-
+            else:
+                return [start + 1, end + 1]
 
