@@ -1,18 +1,12 @@
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        track = dict()
-        pair = []
-        nums_length = len(nums)
+        look_up = dict()
 
-        for index in range(nums_length):
-            num = nums[index]
-            rest = target - num
-            if rest in track:
-                pair.append(track[rest])
-                pair.append(index)
-                return pair
-            else:
-                track[num] = index
+        # Iterate nums and calculate the complement of each number and check it is in dictionary and it is not the same as the used number
+        for index, num in enumerate(nums):
+            complement = target - num
 
-        return pair
+            if complement in look_up:
+                return [index, look_up[complement]]
             
+            look_up[num] = index
