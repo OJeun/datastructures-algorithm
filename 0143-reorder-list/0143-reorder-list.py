@@ -17,8 +17,7 @@ class Solution:
 
         temp = slow.next
         slow.next = None
-        reversed_tail = None
-        second_half_head = reversed_tail
+        second_half_head = None
 
         while temp:
             next_node = temp.next
@@ -28,7 +27,6 @@ class Solution:
 
         left = head
         right = second_half_head
-
         while left and right:
             left_next = left.next
             right_next = right.next
@@ -39,6 +37,4 @@ class Solution:
             right = right_next
             left = left_next
         
-        return head
-
         return head
