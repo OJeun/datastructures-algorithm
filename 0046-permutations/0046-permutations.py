@@ -10,12 +10,12 @@ class Solution:
                     permutation.append(num)
                     visited.add(num)
                     backtracking(permutation)
-                    visited.remove(num)
                     permutation.pop()
-
+                    visited.remove(num)
+                
             if len(permutation) == n:
                 permutations.append(permutation[:])
-            return
 
+            return
         backtracking([])
         return permutations
