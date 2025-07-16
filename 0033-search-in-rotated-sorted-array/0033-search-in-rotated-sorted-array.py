@@ -1,25 +1,24 @@
 class Solution:
-    def search(self, nums: list[int], target: int) -> int:
-        def binarySearch(left, right):
-            mid = (left + right) // 2
-            mid_element = nums[mid]
+    def search(self, nums: List[int], target: int) -> int:
+        
+        def recursion(start, end):
+            if start > end:
+                return -1
+            mid = (start + end) // 2
 
-            if mid_element == target:
+            if nums[mid] == target:
                 return mid
 
-            if left > right:
-                return -1
-
-            if nums[left] <= nums[mid]:
-                if target < nums[mid] and target >= nums[left]:
-                    return binarySearch(left, mid -1)
+            if nums[start] < nums[mid]:
+                if nums[start] <= target < nums[mid]: # first half is ascending
+                    return recursion(start, mid - 1)
                 else:
-                    return binarySearch(mid+1, right)
+                    return recursion(mid+1, end)
             else:
-                if target > nums[mid] and target <= nums[right]:
-                    return binarySearch(mid+1, right)
+                if nums[mid] < target <= nums[end]:
+                    return recursion(mid+1, end)
                 else:
-                    return binarySearch(left, mid -1)
+                    return recursion(start, mid - 1)
+
         
-        n = len(nums)
-        return binarySearch(0, n-1)
+        return recursion(0, len(nums) - 1)
