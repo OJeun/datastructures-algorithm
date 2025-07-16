@@ -1,22 +1,21 @@
 class Solution:
-    def permute(self, nums: list[int]) -> list[list[int]]:
-        output = []
-        permutation = []
-        track = set()
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        n = len(nums)
+        permutations = []
 
-        def backtracking():
-            if len(permutation) == 3:
-                output.append(permutation[:])
-                return
-            
-            for index in range(len(nums)):
-                curr_num = nums[index]
-                if curr_num not in track:
-                    permutation.append(curr_num)
-                    track.add(curr_num)
-                    backtracking()
+        visited = set()
+        def backtracking(permutation):
+            for num in nums:
+                if num not in visited:
+                    permutation.append(num)
+                    visited.add(num)
+                    backtracking(permutation)
+                    visited.remove(num)
                     permutation.pop()
-                    track.remove(curr_num)
 
-        backtracking()
-        return output
+            if len(permutation) == n:
+                permutations.append(permutation[:])
+            return
+
+        backtracking([])
+        return permutations
