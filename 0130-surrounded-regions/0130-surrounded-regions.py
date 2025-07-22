@@ -8,6 +8,9 @@ class Solution:
         visited = [[0] * columns for _ in range(rows)]
 
         def dfs(r, c):
+            if visited[r][c] == 'v':
+                return
+
             visited[r][c] = 'v'
             board[r][c] = 'T'
 
