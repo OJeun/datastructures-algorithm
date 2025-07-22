@@ -22,16 +22,18 @@ class Solution:
                     if board[moved_r][moved_c] == 'O':
                         dfs(r + dr, c + dc)
 
-        for row in [0, rows -1]:
-            for column in range(columns):
-                if board[row][column] == 'O':
-                    dfs(row, column)
+        for column in range(columns):
+            if board[rows - 1][column] == 'O':
+                dfs(rows - 1, column)
+            if board[0][column] == 'O':
+                dfs(0, column)
 
         # traver left and right edge columns
-        for column in [0, columns - 1]:
-            for row in range(rows):
-                if board[row][column] == 'O':
-                    dfs(row, column)
+        for row in range(rows):
+            if board[row][0] == 'O':
+                dfs(row, 0)
+            if board[row][columns - 1] == 'O':
+                dfs(row, columns - 1)
 
         
         for r in range(rows):
@@ -41,8 +43,3 @@ class Solution:
                     board[r][c] = 'O'
                 if cell == 'O':
                     board[r][c] = 'X'
-            
-
-        # nested for loop 
-            # update T to 0
-            # update 0 to X
