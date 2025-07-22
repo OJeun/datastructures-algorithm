@@ -8,9 +8,6 @@ class Solution:
         visited = [[0] * columns for _ in range(rows)]
 
         def dfs(r, c):
-            if visited[r][c] == 'v':
-                return
-
             visited[r][c] = 'v'
             board[r][c] = 'T'
 
@@ -19,7 +16,7 @@ class Solution:
                 moved_r = r + dr
                 moved_c = c + dc
                 if 0 <= moved_r < rows and 0 <= moved_c < columns:
-                    if board[moved_r][moved_c] == 'O':
+                    if visited[moved_r][moved_c] != 'v' and board[moved_r][moved_c] == 'O':
                         dfs(r + dr, c + dc)
 
         for column in range(columns):
