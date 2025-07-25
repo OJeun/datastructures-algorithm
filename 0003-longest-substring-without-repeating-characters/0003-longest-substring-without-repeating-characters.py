@@ -4,9 +4,8 @@ class Solution:
 
         start = 0
         seen = set()
-        seen.add(s[start])
 
-        for end in range(1, len(s)):
+        for end in range(len(s)):
             current = s[end]
             while current in seen:
                 seen.remove(s[start])
