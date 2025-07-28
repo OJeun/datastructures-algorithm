@@ -4,16 +4,13 @@ class Solution:
         output = []
 
         partition_end = 0
-        partition_start = 0
+        partition_start = -1
 
         for index, char in enumerate(s):
             position = ord(char) - ord('a')
             char_index[position] = index
 
         for index, char in enumerate(s): 
-            if partition_end == 0:
-                partition_start = index
-
             position = ord(char) - ord('a')
             last_index = char_index[position]
 
@@ -21,9 +18,9 @@ class Solution:
                 partition_end = max(partition_end, last_index)
 
             if index == partition_end:
-                partition_length = partition_end - partition_start + 1
+                partition_length = partition_end - partition_start
                 output.append(partition_length)
-                partition_end = 0
+                partition_start = index
 
         return output
 
