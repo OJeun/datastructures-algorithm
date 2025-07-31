@@ -10,19 +10,14 @@ class Solution:
             return False
         
         def recursive(node, total):
+            if not node:
+                return False
+
             total += node.val
 
             if not node.left and not node.right:
                 return total == targetSum
-
-            left, right = False, False
             
-            if node.left:
-                left = recursive(node.left, total)
-
-            if node.right:
-                right = recursive(node.right, total)
-
-            return left or right
+            return recursive(node.left, total) or recursive(node.right, total)
 
         return recursive(root, 0)
