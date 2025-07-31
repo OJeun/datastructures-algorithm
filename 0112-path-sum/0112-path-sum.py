@@ -8,18 +8,21 @@ class Solution:
     def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
         if not root:
             return False
+        
+        def recursive(node, total):
+            total += node.val
+
+            if not node.left and not node.right:
+                return total == targetSum
+
+            left, right = False, False
             
-        if root and not root.left and not root.right:
-            targetSum -= root.val
-            return targetSum == 0
+            if node.left:
+                left = recursive(node.left, total)
 
-        left = self.hasPathSum(root.left, targetSum - root.val)
-        right = self.hasPathSum(root.right, targetSum - root.val)
+            if node.right:
+                right = recursive(node.right, total)
 
-        return left or right
+            return left or right
 
-
-
-        
-
-        
+        return recursive(root, 0)
