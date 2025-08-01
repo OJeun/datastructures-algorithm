@@ -8,17 +8,19 @@ class Solution:
     def minDepth(self, root: Optional[TreeNode]) -> int:
         def dfs(node, depth):
             if not node:
-                return float('inf')
+                return 0
 
             if not node.left and not node.right:
                 return depth
 
-            left = dfs(node.left, depth + 1)
-            right = dfs(node.right, depth + 1) 
+            if node.left and node.right:
+                return min(
+                    dfs(node.left, depth + 1),
+                    dfs(node.right, depth + 1)
+                )
+            elif not node.left:
+                return dfs(node.right, depth + 1)
+            else:
+                return dfs(node.left, depth + 1)
 
-            return min(left, right)
-        
-        if not root:
-            return 0
-            
         return dfs(root, 1)
