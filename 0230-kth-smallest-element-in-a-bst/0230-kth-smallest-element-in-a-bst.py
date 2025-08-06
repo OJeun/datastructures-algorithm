@@ -8,6 +8,9 @@ class Solution:
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
         self.count = 0
         def dfs(node):
+            if self.count > k:
+                return -1
+                
             left, right = -1, -1
 
             if node and node.left:
