@@ -3,27 +3,21 @@ class Solution:
         late = 0
         absent = 0
 
-        day = 0 
-
-        while day < len(s):
-            if s[day] == "A":
+        for state in s:
+            if state == "A":
                 absent += 1
+                late = 0
                 if absent > 1:
                     return False
-                day += 1
 
-            elif s[day] == "P":
-                day += 1
+            elif state == "P":
+                late = 0
 
             else:
-                while day < len(s) and s[day] == "L":
-                    late += 1
-                    day += 1
-
-                    if late > 2:
-                        return False
+                late += 1
+                if late > 2:
+                    return False
                 
-                late = 0
 
         return True
             
