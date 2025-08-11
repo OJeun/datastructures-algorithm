@@ -1,13 +1,13 @@
 class Solution:
-    def productExceptSelf(self, nums: List[int]) -> List[int]:
-        right_product = 1
-        product = [1]
+    def productExceptSelf(self, nums: list[int]) -> list[int]:
+        multiply = [1]
+        acc_multiply = 1
 
-        # fill product list, if i = 2, proudct[i] = product of elements that are less than index 2.
         for i in range(1, len(nums)):
-            product.append(product[i - 1] * nums[i - 1])
-        for j in range(len(nums) - 2, -1, -1):
-            right_product *= nums[j + 1]
-            product[j] = product[j] * right_product
+            multiply.append(nums[i-1] * multiply[i-1])
 
-        return product
+        for j in range(len(nums) -2, -1, -1):
+            acc_multiply *= nums[j + 1]
+            multiply[j] *= acc_multiply
+
+        return multiply
