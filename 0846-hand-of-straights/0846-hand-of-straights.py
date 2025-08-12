@@ -1,3 +1,6 @@
+import heapq
+
+
 class Solution:
     def isNStraightHand(self, hand: list[int], groupSize: int) -> bool:
         if len(hand) % groupSize != 0:
@@ -8,13 +11,15 @@ class Solution:
         for num in hand:
             frequency[num] = frequency.get(num, 0) + 1
 
-        hand.sort()
+        heapq.heapify(hand)
+        minH = hand
 
-        for num in hand:
-            if frequency.get(num):
-                frequency[num] -= 1
+        while minH:
+            min_val = heapq.heappop(minH)
+            if frequency.get(min_val):
+                frequency[min_val] -= 1
                 for i in range(1, groupSize):
-                    sequence = num + i
+                    sequence = min_val + i
                     count = frequency.get(sequence)
                     if count and count > 0:
                         frequency[sequence] -= 1
