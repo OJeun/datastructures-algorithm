@@ -11,25 +11,27 @@ class Solution:
             else:
                 slow = slow.next
 
-        temp = None
-        prev = slow
-        curr = slow.next if slow else None
+        if slow is None:
+            return True
+
+        curr = slow.next
+        slow.next = None
+        prev = None 
     
         while curr:
-            next_node = curr.next
+            nxt = curr.next
+            curr.next = prev
+            prev = curr
+            curr = nxt
+            
 
-            curr.next = temp
-            temp = curr
-            curr = next_node
+        right = prev
 
-        left = head
-        right = temp
-
-        while right and left:
-            if right.val != left.val:
+        while right and head:
+            if right.val != head.val:
                 return False
             right = right.next
-            left = left.next
+            head = head.next
 
         return True
 
