@@ -1,31 +1,31 @@
 class Solution:
-    def evalRPN(self, tokens: list[str]) -> int:
-        arithmetic_expression = {
-    '+': lambda a, b: a + b,
-    '-': lambda a, b: a - b,
-    '*': lambda a, b: a * b,
-    '/': lambda a, b: int(a / b)
-}
+    def evalRPN(self, tokens: List[str]) -> int:
         stack = []
+        operators = ["+", "-", "*", "/"]
+
         for token in tokens:
-            if token not in arithmetic_expression:
-                stack.append(int(token))
-            else:
+
+            if token in operators:
+                result = 0
                 second_operand = stack.pop()
                 first_operand = stack.pop()
-                result = arithmetic_expression[token](first_operand, second_operand)
+
+                if token == "*":
+                    result = first_operand * second_operand
+
+                elif token == "/":
+                    result = int(first_operand / second_operand)
+
+                elif token == "+":
+                    result = first_operand + second_operand
+
+                else:
+                    result = first_operand - second_operand
+                
                 stack.append(result)
+
+            else:
+                stack.append(int(token))
+
+        
         return stack.pop()
-
-    
-def add(op1, op2):
-    return op1 + op2
-
-def subtract(op1, op2):
-    return op1 - op2
-
-def multiply(op1, op2):
-    return op1 * op2
-
-def divide(op1, op2):
-    return math.trunc(op1 / op2)
