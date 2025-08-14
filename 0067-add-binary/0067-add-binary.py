@@ -1,25 +1,19 @@
 class Solution:
     def addBinary(self, a: str, b: str) -> str:
-        point_a = len(a) - 1
-        point_b = len(b) - 1
+        a = a[::-1]
+        b = b[::-1]
+
         carry = 0
         result = ""
 
-        while point_a >= 0 and point_b >= 0:
-            add_two = int(a[point_a]) + int(b[point_b]) + carry
-            carry = add_two // 2
-            result = str(add_two % 2) + result 
-            point_a -= 1
-            point_b -= 1
+        for i in range(max(len(a), len(b))):
+            digit_a = ord(a[i]) - ord("0") if i < len(a) else 0
+            digit_b = ord(b[i]) - ord("0") if i < len(b) else 0
 
-        binary, pointer = (a, point_a) if point_a >= 0 else (b, point_b)
+            total = digit_a + digit_b + carry
 
-        while pointer >= 0:
-            add_two = int(binary[pointer]) + carry 
-            carry = add_two // 2
-            result = str(add_two % 2) + result
-
-            pointer -= 1
+            result = str(total % 2) + result
+            carry = total // 2
 
         if carry == 1:
             result = "1" + result
