@@ -5,15 +5,14 @@ class Solution:
         for _ in range(len(s)):
             dp.append([-1] * len(s))
         
-        for i in range(len(s)):
-            dp[i][i] = True
 
         def recursive(start, end) -> bool:
+            if start >= end:
+                return True
+                
             if dp[start][end] != -1:
                 return dp[start][end]
 
-            if start > end:
-                return True
 
             if s[start] == s[end] and recursive(start+1, end-1):
                 dp[start][end] = True
