@@ -9,10 +9,9 @@ class Solution:
         def recursive(start, end) -> bool:
             if start >= end:
                 return True
-                
+
             if dp[start][end] != -1:
                 return dp[start][end]
-
 
             if s[start] == s[end] and recursive(start+1, end-1):
                 dp[start][end] = True
@@ -23,7 +22,7 @@ class Solution:
                 
 
         for i in range(len(s)):
-            for j in range(len(s)):
+            for j in range(i, len(s)):
                 if dp[i][j] == -1:
                     recursive(i, j)
 
