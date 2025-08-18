@@ -1,5 +1,5 @@
 class Solution:
-    def letterCombinations(self, digits: str) -> List[str]:
+    def letterCombinations(self, digits: str) -> list[str]:
         digit_to_letters = {
             "2": "abc",
             "3": "def",
@@ -11,21 +11,22 @@ class Solution:
             "9": "wxyz"
         }
 
-        n = len(digits)
-        res, sol = [], []
+        result = []
 
-        if digits == "":
-            return []
-
-        def backtracking(index):
-            if len(sol) == n:
-                res.append("".join(sol))
+        def combinations(digits, combination):
+            if len(digits) == 0:
+                if combination:
+                    result.append("".join(combination)) 
                 return
 
-            for char in digit_to_letters[digits[index]]:
-                sol.append(char)
-                backtracking(index + 1)
-                sol.pop()
+            letters = digit_to_letters[digits[0]]
 
-        backtracking(0)
-        return res
+            for letter in letters:
+                combination.append(letter)
+                combinations(digits[1:], combination)
+                combination.pop()
+        
+        combinations(digits, [])
+        return result
+                
+
