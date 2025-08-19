@@ -10,17 +10,8 @@ class Solution:
         second = headB
 
         while first != second:
-            first = first.next
-            second = second.next
-
-            if first == second:
-                return first
-
-            if first is None:
-                first = headB
-
-            if second is None:
-                second = headA
+            first = first.next if first is not None else headB
+            second = second.next if second is not None else headA
 
         return first
 
