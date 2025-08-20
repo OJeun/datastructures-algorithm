@@ -1,15 +1,13 @@
 class Solution:
-    def removeDuplicates(self, nums: List[int]) -> int:
-        duplicate = set()
-        to_be_swapped = 1
+    def removeDuplicates(self, nums: list[int]) -> int:
+        next_distinct = 0
         curr = 1
-        nums_length = len(nums)
 
-        while curr < nums_length:
+        while curr < len(nums):
             if nums[curr] != nums[curr - 1]:
-                nums[to_be_swapped] = nums[curr]
-                to_be_swapped += 1
-                
+                next_distinct += 1
+                nums[next_distinct] = nums[curr]
+
             curr += 1
 
-        return to_be_swapped 
+        return next_distinct + 1
