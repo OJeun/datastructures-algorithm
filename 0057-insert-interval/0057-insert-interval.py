@@ -8,7 +8,8 @@ class Solution:
         if not intervals:
             return [newInterval]
 
-        for interval in intervals:
+        for i in range(len(intervals)):
+            interval = intervals[i]
             start = interval[0]
             end = interval[1]
 
@@ -16,17 +17,15 @@ class Solution:
                 result.append(interval)
 
             elif start > new_end:
-                if flag == False:
-                    result.append([new_start, new_end])
-                    flag = True
-                result.append(interval)
+                result.append([new_start, new_end])
+                return result + intervals[i:]
 
             else:
                 new_start = min(start, new_start)
                 new_end = max(end, new_end)
 
-        if flag == False:
-            result.append([new_start, new_end])
-
+        result.append([new_start, new_end])
         return result
+
+
 
