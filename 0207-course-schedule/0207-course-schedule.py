@@ -1,37 +1,40 @@
 from collections import defaultdict
 class Solution:
-    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        graph = defaultdict(list) # key: prerequisite, values: courses after take a prerequisite
+    def canFinish(self, numCourses: int, prerequisites: list[list[int]]) -> bool:
+        courses = defaultdict(list)
+        self.visited = set()
+        self.valid_courses = set()
 
-        for prerequisite in prerequisites:
-            # prerequisite = [0, 1]
-            pre_course = prerequisite[1]
-            course = prerequisite[0]
+        for second, first in prerequisites:
+            courses[second].append(first)
 
-            graph[pre_course].append(course)
-
-        visited = set()
-
+        # To detect any cycle in a graph
         def dfs(course):
-            if course in visited:
+            if course in self.valid_courses:
+                return False
+                
+            if course not in courses:
+                self.valid_courses.add(course)
                 return False
 
-            visited.add(course)
+            if course in self.visited:
+                return True
 
-            for next_course in graph[course]:    
-                if dfs(next_course) == False:
-                    return False
+            self.visited.add(course)
 
-            visited.remove(course)
-            return True
+            for prerequisite in courses[course]:
+                is_cycle = dfs(prerequisite)
                 
+                if is_cycle == True:
+                    return True
 
-        for num in range(numCourses): 
-            if num in graph and num not in visited:
-                if dfs(num) == False:
+            self.valid_courses.add(course)
+
+            return False
+
+        for course in range(numCourses):
+            if course not in self.valid_courses:
+                if dfs(course) == True:
                     return False
-            
+
         return True
-
-
-            
