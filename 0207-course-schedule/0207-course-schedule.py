@@ -9,12 +9,8 @@ class Solution:
             courses[second].append(first)
 
         # To detect any cycle in a graph
-        def dfs(course):
+        def is_cycle(course):
             if course in self.valid_courses:
-                return False
-                
-            if course not in courses:
-                self.valid_courses.add(course)
                 return False
 
             if course in self.visited:
@@ -22,19 +18,18 @@ class Solution:
 
             self.visited.add(course)
 
-            for prerequisite in courses[course]:
-                is_cycle = dfs(prerequisite)
-                
-                if is_cycle == True:
+            for prerequisite in courses.get(course, []):
+                if is_cycle(prerequisite) == True:
                     return True
 
             self.valid_courses.add(course)
+            self.visited.pop()
 
             return False
 
         for course in range(numCourses):
             if course not in self.valid_courses:
-                if dfs(course) == True:
+                if is_cycle(course) == True:
                     return False
 
         return True
