@@ -35,10 +35,10 @@ class TimeMap:
             return mid
 
         if target < timestamps[mid]:
-            return self._binarySearch(start, mid - 1)
+            return self._binarySearch(start, mid - 1, timestamps, target)
 
         if target > timestamps[mid]:
-            return self._binarySearch(mid, end)
+            return self._binarySearch(mid, end, timestamps, target)
 
 # Your TimeMap object will be instantiated and called as such:
 # obj = TimeMap()
