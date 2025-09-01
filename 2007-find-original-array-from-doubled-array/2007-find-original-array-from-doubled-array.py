@@ -16,13 +16,12 @@ class Solution:
             count = frequency.get(num)
             doubled = frequency.get(num*2)
 
-            if doubled:
-                if count != 0:
+            if count != 0:
+                if doubled:
                     frequency[num] -= 1
                     frequency[num*2] -= 1
                     result.append(num)
-            else:
-                if count != 0:
+                else:
                     return []
 
         return result
