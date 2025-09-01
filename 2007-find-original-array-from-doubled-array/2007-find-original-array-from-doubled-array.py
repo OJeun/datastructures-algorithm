@@ -15,11 +15,11 @@ class Solution:
         for num in changed:
             
             while frequency.get(num) > 0:
-                if frequency.get(num*2):
-                    frequency[num] -= 1
-                    frequency[num*2] -= 1
-                    result.append(num)
-                else:
+                if not frequency.get(num*2):
                     return []
+                frequency.get(num*2)
+                frequency[num] -= 1
+                frequency[num*2] -= 1
+                result.append(num)
 
         return result
