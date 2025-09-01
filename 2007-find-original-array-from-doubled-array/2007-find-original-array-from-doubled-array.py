@@ -1,5 +1,5 @@
 class Solution:
-    def findOriginalArray(self, changed: List[int]) -> List[int]:
+    def findOriginalArray(self, changed: list[int]) -> list[int]:
         result = []
 
         if len(changed)%2 != 0:
@@ -13,11 +13,9 @@ class Solution:
             frequency[num] = frequency.get(num, 0) + 1
 
         for num in changed:
-            count = frequency.get(num)
-            doubled = frequency.get(num*2)
-
-            if count != 0:
-                if doubled:
+            
+            while frequency.get(num) > 0:
+                if frequency.get(num*2):
                     frequency[num] -= 1
                     frequency[num*2] -= 1
                     result.append(num)
@@ -25,4 +23,3 @@ class Solution:
                     return []
 
         return result
-                
