@@ -1,44 +1,34 @@
-from collections import deque
+from collections import deque 
+
 class Solution:
-    def numIslands(self, grid: List[List[str]]) -> int:
-        # define a variable to count the num of islands
-        islands = 0
-        # define two variables length of rows and columns 
-        rows = len(grid)
-        columns = len(grid[0])
-        queue = deque()
+    def numIslands(self, grid: List[List[int]]) -> int:
+        self.count = 0
+        self.rows = len(grid)
+        self.columns = len(grid[0])
 
-        # for loop to iterate a grid row
-        for row in range(rows):
-            # iterate columns of a row
-            for column in range(columns):
-                curr_cell = grid[row][column] 
-                # if (row, column) is not visited
-                if curr_cell == '1':
-                    queue.append((row, column))
-                    
-                    # traverse the grid using bfs 
-                    while len(queue) > 0:
-                        r, c = queue.popleft()
-                        grid[r][c] = 'v'
-                        # up, (r-1, c)
-                        if r - 1 >= 0 and grid[r-1][c] == "1":
-                            queue.append((r-1, c))
+        def bfs(r, c, grid):
+            queue = deque([(r, c)])
+            grid[r][c] = "x"
+            
+            directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+            while queue:
+                r, c = queue.popleft()
+                for offset_r, offset_c in directions:
+                    new_r = r + offset_r
+                    new_c = c + offset_c
 
-                        # down (r+1, c)
-                        if r + 1 < rows and grid[r+1][c] == "1":
-                            queue.append((r+1, c))
+                    if 0 <= new_r < self.rows and 0 <= new_c < self.columns:
+                        if grid[new_r][new_c] == "1":
+                            queue.append((new_r, new_c))
+                            grid[new_r][new_c] = "x"
 
-                        # left (r, c - 1)
-                        if c - 1 >= 0 and grid[r][c - 1] == "1"  :
-                            queue.append((r, c - 1))
+            self.count += 1
+        
+        # traverse the grid 
+        for r in range(self.rows):
+            for c in range(self.columns):
+                if grid[r][c] == "1":
+                    bfs(r, c, grid)
 
-                        # right (r, c + 1)
-                        if c + 1 < columns and grid[r][c + 1] == "1":
-                            queue.append((r, c + 1))
-                    
-                    islands += 1
+        return self.count
 
-        return islands
-                        
-                    
