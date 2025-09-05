@@ -3,14 +3,9 @@ class Solution:
         maxSum = nums[0]
         currSum = nums[0]
 
-        left = 0
+        for i in range(1, len(nums)):
 
-        for right in range(1, len(nums)):
-            currSum += nums[right]
-
-            if currSum <= 0 or (currSum > 0 and currSum < nums[right]):
-                left = right
-                currSum = nums[left]
+            currSum = max(currSum + nums[i], nums[i])
 
             maxSum = max(maxSum, currSum)
 
