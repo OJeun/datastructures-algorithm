@@ -1,15 +1,17 @@
 class Solution:
     def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
-        nums1_dict = dict()
-        intersection = []
-
-        for num in nums1:
-            nums1_dict[num] = nums1_dict.get(num, 0) + 1
+        seen = dict()
+        output = []
 
         for num in nums2:
-            is_num_in_nums1 = nums1_dict.get(num)
-            if is_num_in_nums1 and is_num_in_nums1 > 0:
-                nums1_dict[num] -= 1
-                intersection.append(num)
+            seen[num] = seen.get(num, 0) + 1
 
-        return intersection
+
+        for num in nums1:
+            frequency = seen.get(num)
+            if frequency and frequency > 0:
+                output.append(num)
+                seen[num] -= 1
+
+        return output
+
