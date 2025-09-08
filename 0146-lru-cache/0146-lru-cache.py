@@ -1,84 +1,91 @@
+from collections import deque 
 class Node:
-    def __init__(self, key:int, val: int):
-        self.key = key
-        self.val = val
+    def __init__(self, pair):
+        self.pair = pair
         self.next = None
         self.prev = None
 
-class Deque:
-    def __init__(self):
-        self.first = None
-        self.last = None
-        self.length = 0
+class DoublyLinkedList:
+    def __init__(self, node=None):
+        self.head = node
+        self.tail = node
     
-    # Insert the newest element to the first
-    def add(self, key, val):
-        new_node = Node(key, val)
-        if self.first == None and self.last == None:
-            self.first = new_node
-            self.last = new_node
-        else:
-            new_node.next = self.first
-            self.first.prev = new_node
-            self.first = new_node
-        self.length += 1
-        return new_node
+    def remove(self, node):
+        prev = node.prev
+        nxt = node.next
 
-    def update_order(self, recent_node):
-        if recent_node != self.first:
-            prev_node = recent_node.prev
-            next_node = recent_node.next
-            prev_node.next = next_node
-            if next_node is not None:
-                next_node.prev = prev_node
-            else:
-                self.last = prev_node
-            self.first.prev = recent_node
-            recent_node.next = self.first
-            recent_node.prev = None
-            self.first = recent_node
+        if prev:
+            prev.next = nxt
+        else:
+            self.head = nxt
+        
+        if nxt:
+            nxt.prev = prev
+        else:
+            self.tail = prev
+        
+        node.next = None
+        node.prev = None
+
+        return node
     
-    def delete(self): # Delete the last node = oldest node
-        node_to_delete = None
-        if self.last == self.first:
-            node_to_delete = self.first
-            self.last = None
-            self.first = None
-        else:
-            node_to_delete = self.last
-            prev_node = self.last.prev
-            prev_node.next = None
-            self.last = prev_node 
-        self.length -= 1
+    def pop(self): # remove head(the least accessed)
+        popped = self.head
+        if not self.head and not self.tail:
+            return None
 
-        return node_to_delete
+        nxt = self.head.next
+        if not nxt:
+            self.tail = None
+            self.head = None
+        else:
+            self.head.next = None
+            self.head.prev = None
+            self.head = nxt
+    
+        return popped 
+
+    def append(self, node): # pair = (key, value) => node is recent accessed
+        node.prev = node.next = None 
+        if not self.tail and not self.head:
+            self.tail = node
+            self.head = node
+        else:
+            self.tail.next = node
+            node.prev = self.tail
+            self.tail = node
+
+        return node
+
 
 class LRUCache:
-
     def __init__(self, capacity: int):
+        self.data = dict() # key and node pointer
+        self.dll = DoublyLinkedList()
         self.capacity = capacity
-        self.cache = {} # key: val, value: node address
-        self.deque = Deque()
 
     def get(self, key: int) -> int:
-        if key in self.cache:
-            node = self.cache[key]
-            self.deque.update_order(node)
-            return node.val
+        node = self.data.get(key)
+        if node:
+            value = node.pair[1]
+            self.dll.remove(node)
+            self.dll.append(node)
+            self.data[key] = node
+            return value
         else:
-            return - 1
+            return -1
         
     def put(self, key: int, value: int) -> None:
-        if key in self.cache:
-            node = self.cache[key]
-            node.val = value
-            self.deque.update_order(node)
+        if self.data.get(key):
+            node = self.data[key]
+            node.pair[1] = value
+            self.dll.remove(node)          
+            self.dll.append(node)  
+        
         else:
-            if self.deque.length >= self.capacity:
-                node_to_delete = self.deque.delete()
-                del self.cache[node_to_delete.key]
-                
-            added_node = self.deque.add(key, value)
-            self.cache[key] = added_node
-            
-            
+            if len(self.data) == self.capacity:
+                moved_node = self.dll.pop()
+                self.data.pop(moved_node.pair[0]) 
+        
+            added_node = self.dll.append(Node([key, value]))
+            self.data[key] = added_node
