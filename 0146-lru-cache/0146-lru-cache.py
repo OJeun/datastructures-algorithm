@@ -31,19 +31,22 @@ class DoublyLinkedList:
     
     def pop(self): # remove head(the least accessed)
         popped = self.head
-        if not self.head and not self.tail:
+        if not self.head:
             return None
 
-        nxt = self.head.next
-        if not nxt:
-            self.tail = None
-            self.head = None
-        else:
-            self.head.next = None
+        self.head = self.head.next
+
+        if self.head:
             self.head.prev = None
-            self.head = nxt
+        else:
+            self.tail = None
+
+        popped.prev = None
+        popped.next = None
+
+        return popped
     
-        return popped 
+
 
     def append(self, node): # pair = (key, value) => node is recent accessed
         node.prev = node.next = None 
