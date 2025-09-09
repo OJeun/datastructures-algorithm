@@ -2,30 +2,23 @@ class Solution:
 
     def letterCasePermutation(self, s: str) -> list[str]:
         permutations = []
+        n = len(s)
+        path = list(s)
 
-        def permutation(index, perm: list):
-            if len(perm) == len(s):
-                str_perm = "".join(perm)
-                permutations.append(str_perm)
+        def permutation(index):
+            if index == n:
+                permutations.append(''.join(path))
                 return
 
-            char = s[index]
-            if char.isdigit():
-                perm.append(char)
-                permutation(index+1, perm)
-                perm.pop()
-
-            if char.isalpha():
-                perm.append(char)
-                permutation(index+1, perm)
-                perm.pop()
-
-                char = s[index].lower() if s[index].isupper() else s[index].upper()
-                perm.append(char)
-                permutation(index+1, perm)
-                perm.pop()
-   
+            if s[index].isdigit():
+                path[index] = s[index]
+                permutation(index + 1)
+            
+            else: 
+                path[index] = s[index].lower()
+                permutation(index+1)
+                path[index] = s[index].upper()
+                permutation(index+1)
         
-
-        permutation(0, [])
+        permutation(0)
         return permutations
