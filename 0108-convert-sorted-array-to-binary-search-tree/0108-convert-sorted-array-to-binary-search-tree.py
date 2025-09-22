@@ -12,7 +12,7 @@ class Solution:
 
             mid = (start + end) // 2
 
-            sub_root = TreeNode(nums[mid]
+            sub_root = TreeNode(nums[mid])
 
             sub_left = helper(start, mid - 1)
             sub_right = helper(mid + 1, end)
