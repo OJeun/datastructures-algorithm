@@ -1,52 +1,35 @@
 class Solution:
-    def exist(self, board: List[List[str]], word: str) -> bool:
-        res = []
+    def exist(self, board: list[list[str]], word: str) -> bool:
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)] # up, down, left, right
         rows = len(board)
         columns = len(board[0])
+        seen = [["x" for _ in range(columns)] for _ in range(rows)]
 
-        def helper(row, column, char_index):
-            if char_index == len(word):
+        def bfs(r, c, index):
+
+            if index >= len(word):
                 return True
-
-            if row == rows or column == columns or row < 0 or column < 0:
-                return False
-
-            targeted_char = word[char_index]
-            current_char = board[row][column]
             
-            if current_char != targeted_char:
-                return False   
-            else: 
-                board[row][column] = "#"
-                char_index += 1
-                
-            up, right, down, left = False, False, False, False
+            for offset_r, offset_c in directions:
+                row = r + offset_r
+                column = c + offset_c
 
-            # up
-            if row - 1 >= 0 and board[row - 1][column] != "#":
-                up = helper(row - 1, column, char_index)
-
-            # right
-            if column + 1 < columns and board[row][column + 1] != "#":
-                right = helper(row, column + 1, char_index)
-
-            # down
-            if row + 1 < rows and board[row + 1][column] != "#":
-                down = helper(row + 1, column, char_index)
-
-            # left
-            if column - 1 >= 0 and board[row][column - 1] != "#":
-                left = helper(row, column - 1, char_index)
-            
-            if (up or right or down or left) == False and char_index != len(word):
-                board[row][column] = current_char
-                return False
-            else:
-                return True
+                if 0 <= row < rows and 0 <= column < columns:
+                    if seen[row][column] =="x" and board[row][column] == word[index]:
+                        seen[row][column] = "v"
+                        if bfs(row, column, index + 1) == False:
+                            seen[row][column] = "x"
+                        else:
+                            return True
+                            
+            return False
         
         for r in range(rows):
             for c in range(columns):
-                if helper(r, c, 0):
-                    return True
+                if board[r][c] == word[0]:
+                    seen[r][c] = "v"
+                    if bfs(r, c, 1):
+                        return True
+                    seen[r][c] = "x"
         
         return False
