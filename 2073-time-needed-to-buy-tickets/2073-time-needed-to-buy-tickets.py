@@ -4,6 +4,10 @@ class Solution:
         temp = 0
         time = 0
 
+        for i in range(n):
+            if i < k:
+                tickets[i] = min(tickets[i], tickets[k]) 
+
         # while loop while the number of the ticket at index k reaches 0
         while tickets[k] > 0:
 
