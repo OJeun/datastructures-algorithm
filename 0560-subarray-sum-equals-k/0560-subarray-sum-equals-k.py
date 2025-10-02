@@ -13,9 +13,8 @@ class Solution:
                 count += 1
             
             if acc - k in sum_dict:
-                count += 1
+                count += sum_dict[acc - k]
 
             sum_dict[acc] += 1
 
         return count
-            
