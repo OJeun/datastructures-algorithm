@@ -1,16 +1,21 @@
+from collections import defaultdict
 class Solution:
+    # nums = [1, 2, 3, -2, 5], k = 3
     def subarraySum(self, nums: list[int], k: int) -> int:
+        sum_dict = defaultdict(int)
         acc = 0
-        result = 0
-        frequency = dict()
-        frequency[0] = 1
+        count = 0
 
         for num in nums:
             acc += num
 
-            if -(k - acc) in frequency:
-                result += frequency[-(k - acc)]
+            if acc == k:
+                count += 1
+            
+            if acc - k in sum_dict:
+                count += 1
 
-            frequency[acc] = frequency.get(acc,0) + 1
+            sum_dict[acc] += 1
 
-        return result
+        return count
+            
