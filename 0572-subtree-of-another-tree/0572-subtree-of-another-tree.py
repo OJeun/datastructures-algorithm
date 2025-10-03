@@ -1,7 +1,5 @@
-
 class Solution:
     def isSubtree(self, root, subRoot) -> bool:
- 
         def isSameTree(rootTree, subTree):
             if not rootTree and not subTree:
                 return True
@@ -14,7 +12,6 @@ class Solution:
 
             return left and right
 
-
         def traverse(node):
             if not node:
                 return False
@@ -22,19 +19,15 @@ class Solution:
             if node.val == subRoot.val:
                 if isSameTree(node, subRoot):
                     return True
-            
-            left, right = False, False
 
             if node.left:
-                left = traverse(node.left)
-                if left:
+                if traverse(node.left):
                     return True
 
             if node.right:
-                right = traverse(node.right)
-                if right:
+                if traverse(node.right):
                     return True
 
-            return left or right
+            return False
         
         return traverse(root)
