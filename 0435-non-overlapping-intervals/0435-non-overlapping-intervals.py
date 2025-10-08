@@ -2,26 +2,17 @@ class Solution:
     def eraseOverlapIntervals(self, intervals) -> int:
         intervals.sort()
         count = 0
-        l, r = 0, 1
+        prev_interval = intervals[0]
         n = len(intervals)
 
-        while r < n:
-            first_interval = intervals[l]
-            second_interval = intervals[r]
+        for i in range(1, n):
+            curr_interval = intervals[i]
 
-            first_end = first_interval[1]
-            second_first = second_interval[0]
-            second_end = second_interval[1]
-
-            if first_end > second_first:
-                if first_end > second_end:
-                    l = r
-                    r += 1
-                else:
-                    r += 1
+            if prev_interval[1] > curr_interval[0]:
                 count += 1
+                if prev_interval[1] > curr_interval[1]:
+                    prev_interval = curr_interval
             else:
-                l = r
-                r += 1
+                prev_interval = curr_interval
 
         return count
