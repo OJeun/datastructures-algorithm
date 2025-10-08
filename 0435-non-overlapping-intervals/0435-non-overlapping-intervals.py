@@ -11,10 +11,15 @@ class Solution:
 
             first_end = first_interval[1]
             second_first = second_interval[0]
+            second_end = second_interval[1]
 
             if first_end > second_first:
+                if first_end > second_end:
+                    l = r
+                    r += 1
+                else:
+                    r += 1
                 count += 1
-                r += 1
             else:
                 l = r
                 r += 1
