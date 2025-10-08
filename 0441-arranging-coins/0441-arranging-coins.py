@@ -5,7 +5,7 @@ class Solution:
         coins = 0
 
         while coins <= n:
-            prev = len(memoization) - 1
+            prev = rows
             next_row = memoization[prev] + 1
             coins += next_row
             if coins <= n:
