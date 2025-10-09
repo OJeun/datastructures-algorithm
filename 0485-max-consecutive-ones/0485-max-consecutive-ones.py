@@ -4,14 +4,11 @@ class Solution:
         curr = 0
         count = 0
 
-        while curr < len(nums):
-            if nums[curr] == 1:
+        for num in nums:
+            if num == 1:
                 count += 1
                 maxCount = max(maxCount, count)
-
             else:
                 count = 0
-
-            curr += 1
 
         return maxCount
